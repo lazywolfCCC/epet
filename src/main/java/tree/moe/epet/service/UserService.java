@@ -19,4 +19,14 @@ public class UserService {
 		user = usermapper.getUserByUsername(username);
 		return user;
 	}
+	
+	public void updateUserinfo(User user)
+	{
+		usermapper.updateUserinfo(user);
+	}
+	
+	public void registrtNewUser(User user)
+	{
+		usermapper.registerNewUser(user);
+	}
 }

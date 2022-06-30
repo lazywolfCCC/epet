@@ -9,7 +9,7 @@ public class User {
 	private int sex;
 	private String signature;
 	private int role;
-	private int is_enableed;//是否启用
+	private int is_enabled;//是否启用
 	private int default_address;//默认地址编号
 	public int getId() {
 		return id;
@@ -59,11 +59,11 @@ public class User {
 	public void setRole(int role) {
 		this.role = role;
 	}
-	public int getIs_enableed() {
-		return is_enableed;
+	public int getIs_enabled() {
+		return is_enabled;
 	}
-	public void setIs_enableed(int is_enableed) {
-		this.is_enableed = is_enableed;
+	public void setIs_enableed(int is_enabled) {
+		this.is_enabled = is_enabled;
 	}
 	public int getDefault_address() {
 		return default_address;
@@ -75,6 +75,6 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nickname=" + nickname
 				+ ", telephone=" + telephone + ", sex=" + sex + ", signature=" + signature + ", role=" + role
-				+ ", is_enableed=" + is_enableed + ", default_address=" + default_address + "]";
+				+ ", is_enableed=" + is_enabled + ", default_address=" + default_address + "]";
 	}
 }

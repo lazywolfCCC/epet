@@ -1,17 +1,17 @@
 package tree.moe.epet.entity;
 
 public class Cart {
-	private int cart;
+	private int id;
 	private int user_id;
 	private int sku_id;
 	private int shop_id;
 	private double ori_price;
 	private int num;
-	public int getCart() {
-		return cart;
+	public int getId() {
+		return id;
 	}
-	public void setCart(int cart) {
-		this.cart = cart;
+	public void setCart(int id) {
+		this.id = id;
 	}
 	public int getUser_id() {
 		return user_id;
