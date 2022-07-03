@@ -1,0 +1,27 @@
+package tree.moe.epet.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import tree.moe.epet.entity.Video;
+import tree.moe.epet.entity.Video_comment;
+import tree.moe.epet.mapper.VideoCommentMapper;
+
+@Service
+public class VideoCommentService {
+
+	@Autowired
+	VideoCommentMapper commentMapper;
+	
+	public List<Video_comment> getCommentByVideoId(Video video)
+	{
+		return commentMapper.getCommentByvideoId(video);
+	}
+	
+	public void insertNewComment(Video_comment comment)
+	{
+		commentMapper.insertNewComment(comment);
+	}
+}
