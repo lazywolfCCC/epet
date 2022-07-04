@@ -1,5 +1,4 @@
 tree\moe\epet\entity\Cart.class
-tree\moe\epet\entity\Address.class
 tree\moe\epet\entity\Item_cat.class
 tree\moe\epet\entity\Item_sku.class
 tree\moe\epet\entity\Video.class
@@ -7,6 +6,7 @@ tree\moe\epet\entity\Shop.class
 tree\moe\epet\entity\Collection.class
 tree\moe\epet\entity\User.class
 tree\moe\epet\Application.class
-tree\moe\epet\entity\Item.class
 tree\moe\epet\entity\Video_comment.class
+tree\moe\epet\entity\Address.class
+tree\moe\epet\entity\Item.class
 tree\moe\epet\entity\Item_img.class

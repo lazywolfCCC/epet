@@ -15,6 +15,13 @@ public class Shop {
 	private double lat;//纬度
 	private double lng;//经度
 	private String description;
+	private double distance;
+	public double getDistance() {
+		return distance;
+	}
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 	public int getId() {
 		return id;
 	}

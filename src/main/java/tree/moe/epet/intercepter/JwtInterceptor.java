@@ -4,6 +4,7 @@ package tree.moe.epet.intercepter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import tree.moe.epet.exception.TokenException;
 import tree.moe.epet.util.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         System.out.println("此处测试是否拿到了token：" + token);
 
         if (token == null) {
-            return false;
+            throw new TokenException();
         }
 
         //验证 token
@@ -32,8 +33,6 @@ public class JwtInterceptor implements HandlerInterceptor {
         //验证通过后， 这里测试取出JWT中存放的数据
         //获取 token 中的 userId
         String userId = JwtUtil.getUserId(token);
-        System.out.println("id : " + userId);
-
         //获取 token 中的其他数据
         Map<String, Object> info = JwtUtil.getInfo(token);
         info.forEach((k, v) -> System.out.println(k + ":" + v));

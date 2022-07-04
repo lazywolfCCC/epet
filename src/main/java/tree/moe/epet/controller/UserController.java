@@ -24,19 +24,19 @@ public class UserController {
 	
 	@RequestMapping(value="/user/updateinfo")
 	@ResponseBody
-	public String updateUserinfo(@RequestBody User userinfo)
+	public User updateUserinfo(@RequestBody User userinfo)
 	{
 		userService.updateUserinfo(userinfo);
-		return userService.getUserByUsername(userinfo.getUsername()).toString();
+		return userService.getUserByUsername(userinfo.getUsername());
 	}
 	
 	@RequestMapping(value="/user/getuserinfo")
-	public String getUserinfo(@RequestBody UserVO username)
+	public User getUserinfo(@RequestBody UserVO username)
 	{
-		User user;
+		User user; 
 		System.out.println(username);
 		user = userService.getUserByUsername(username.getUsername());
-		return user.toString();
+		return user;
 	}
 	
 	@RequestMapping(value="/user/register")

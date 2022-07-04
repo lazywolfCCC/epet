@@ -7,6 +7,8 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import tree.moe.epet.entity.Result;
+import tree.moe.epet.exception.TokenException;
+
 import static tree.moe.epet.constant.ResultEnum.*;
 
 import java.util.Date;
@@ -80,23 +82,22 @@ public class JwtUtil {
      * @param token
      * @return
      * */
-    public static Result checkSign(String token) {
+    public static Result checkSign(String token)throws Exception {
         Result result =  new Result();
-        
-    	try {
-            Algorithm algorithm  = Algorithm.HMAC256(SECRET);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    //.withClaim("username, username)
-                    .build();
-            verifier.verify(token);
-            result.setCode(REQUEST_SUCCESS.getCode());
-            result.setMsg(REQUEST_SUCCESS.getMsg());
-            return result;
-        }catch (JWTVerificationException e) {
-        	result.setCode(TOKEN_HAS_EXPIRED.getCode());
-        	result.setMsg(TOKEN_HAS_EXPIRED.getMsg());
-           return result;
+        Algorithm algorithm  = Algorithm.HMAC256(SECRET);
+        JWTVerifier verifier = JWT.require(algorithm)
+           .build();
+        if(token == null || "".equals(token))
+        {
+        	throw new TokenException();
         }
+        verifier.verify(token);
+        result.setCode(REQUEST_SUCCESS.getCode());
+        result.setMsg(REQUEST_SUCCESS.getMsg());
+        return result;
+        
+        	
+        
     }
 }
 
