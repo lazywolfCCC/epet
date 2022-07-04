@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.*;
 
 import tree.moe.epet.entity.Cart;
+import tree.moe.epet.entity.CartItem;
 import tree.moe.epet.entity.User;
 
 @Mapper
@@ -30,4 +31,6 @@ public interface CartMapper {
 	
 	@Delete("delete from cart where id=#{id}")
 	void deleteItemFromCart(Cart cart);
+	
+	List<CartItem> getCartItem(User user);
 }

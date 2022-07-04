@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tree.moe.epet.entity.Cart;
+import tree.moe.epet.entity.CartItem;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.mapper.CartMapper;
 
@@ -44,5 +45,10 @@ public class CartService {
 	public void updateCartByid(Cart cart)
 	{
 		cartMapper.updateCartByid(cart);
+	}
+	
+	public List<CartItem> getCartItem(User user)
+	{
+		return cartMapper.getCartItem(user);
 	}
 }

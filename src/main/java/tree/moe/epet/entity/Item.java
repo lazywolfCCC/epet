@@ -9,6 +9,7 @@ public class Item {
 	private double freight;
 	private int sales;
 	private String cover_img;
+	private Shop shop;
 	public int getId() {
 		return id;
 	}
@@ -57,5 +58,12 @@ public class Item {
 	public void setCover_img(String cover_img) {
 		this.cover_img = cover_img;
 	}
+	public Shop getShop() {
+		return shop;
+	}
+	public void setShop(Shop shop) {
+		this.shop = shop;
+	}
+	
 	
 }

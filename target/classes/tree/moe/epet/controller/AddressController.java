@@ -1,6 +1,9 @@
 package tree.moe.epet.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +16,7 @@ import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.service.AddressService;
+import tree.moe.epet.util.JwtUtil;
 
 import static tree.moe.epet.constant.ResultEnum.*;
 
@@ -24,8 +28,12 @@ public class AddressController {
 	
 	@RequestMapping(value="/address/getAddress")
 	@ResponseBody
-	public List<Address> getAddressByUserId(@RequestBody User user)
+	public List<Address> getAddressByUserId(HttpServletRequest request/*,@RequestBody User user*/)
 	{
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		User user = new User();
+		user.setId((int)info.get("id"));
 		List<Address> list = addressService.getAddressByUserid(user);
 		return list;
 	}

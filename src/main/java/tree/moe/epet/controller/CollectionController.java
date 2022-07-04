@@ -2,6 +2,9 @@ package tree.moe.epet.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static tree.moe.epet.constant.ResultEnum.*;
 
+import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Collection;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.service.CollectionService;
+import tree.moe.epet.util.JwtUtil;
 
 @RestController
 @CrossOrigin
@@ -25,10 +30,15 @@ public class CollectionController {
 	
 	@RequestMapping(value="/collection/getAllCollections")
 	@ResponseBody
-	public Result<List<Collection>> getAllCollections(@RequestBody User user)
+	public Result<List<Collection>> getAllCollections(HttpServletRequest request/*@RequestBody User user*/)
 	{
 		List list = new ArrayList();
 		Result result = new Result();
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		User user = new User();
+		user.setId((int)info.get("id"));
+		
 		list = collectionService.getCollectionByUserid(user);
 		result.setCode(REQUEST_SUCCESS.getCode());
 		result.setMsg(REQUEST_SUCCESS.getMsg());

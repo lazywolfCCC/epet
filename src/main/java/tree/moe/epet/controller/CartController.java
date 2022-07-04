@@ -3,6 +3,9 @@ package tree.moe.epet.controller;
 import static tree.moe.epet.constant.ResultEnum.REQUEST_SUCCESS;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Cart;
+import tree.moe.epet.entity.CartItem;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.exception.CartExistException;
 import tree.moe.epet.exception.ParameterException;
-import tree.moe.epet.service.CartService;
+import tree.moe.epet.service.*;
+import tree.moe.epet.util.JwtUtil;
 
 import static tree.moe.epet.constant.ResultEnum.*;
 
@@ -27,10 +33,17 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
+	@Autowired
+	ItemService itemService;
+	
 	@RequestMapping(value="/cart/getCart")
 	@ResponseBody
-	public List<Cart> getCartByUserid(@RequestBody User user)
+	public List<Cart> getCartByUserid(HttpServletRequest request/*,@RequestBody User user*/)
 	{
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		User user = new User();
+		user.setId((int)info.get("id"));
 		List<Cart> list = cartService.getCartByUserid(user);
 		return list;
 	}
@@ -106,6 +119,16 @@ public class CartController {
 			result.setData("updateCartDone");
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/cart/test")
+	@ResponseBody
+	public List<CartItem> getCartItem(/*@RequestBody User user*/)
+	{
+		User user = new User();
+		user.setId(1);
+		List<CartItem> list = cartService.getCartItem(user);
+		return list;
 	}
 	
 }

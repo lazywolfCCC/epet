@@ -48,12 +48,15 @@ public class UserController {
 		UserVO uservo = new UserVO();
 		Result result = new Result();
 		uservo.setUsername(user.getUsername());
-		if(user.getPassword().length()<6||user.getPassword().length()>30)
+		if(user.getPassword().length()<6||user.getPassword().length()>30||user.getUsername().length()<6)
 		{
 			throw new ParameterException();
 		}
+		if(user.getNickname()==null)
+		{
+			user.setNickname("newUser");
+		}
 		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-		
 		if(userService.getUserByUsername(uservo)!=null)
 		{
 			throw new UserExistException();
