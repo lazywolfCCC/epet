@@ -1,5 +1,6 @@
 package tree.moe.epet.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static tree.moe.epet.constant.ResultEnum.*;
+
 import tree.moe.epet.entity.Collection;
+import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.service.CollectionService;
 
@@ -21,67 +25,57 @@ public class CollectionController {
 	
 	@RequestMapping(value="/collection/getAllCollections")
 	@ResponseBody
-	public List<Collection> getAllCollections(@RequestBody User user)
+	public Result<List<Collection>> getAllCollections(@RequestBody User user)
 	{
-		List list;
-		try 
-		{
-			list = collectionService.getCollectionByUserid(user);
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
-		return list;
+		List list = new ArrayList();
+		Result result = new Result();
+		list = collectionService.getCollectionByUserid(user);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(list);
+		return result;
 	}
 	
 	@RequestMapping(value="/collection/deleteCollection")
 	@ResponseBody
-	public String deleteCollection(@RequestBody Collection collection)
+	public Result deleteCollection(@RequestBody Collection collection)
 	{
 		Collection check;
-		try 
+		Result result = new Result();
+		check = collectionService.getCollectionByid(collection);
+		if(check==null)
 		{
-			check = collectionService.getCollectionByid(collection);
-			if(check==null)
-			{
-				return "theCollectionNotExist";
-			}
-			else
-			{
-				collectionService.deleteCollectino(collection);
-			}
+			result.setCode(NO_SUCH_COLLECTION_ITEM.getCode());
+			result.setMsg(NO_SUCH_COLLECTION_ITEM.getMsg());
 		}
-		catch(Exception e)
+		else
 		{
-			return "error";
+			collectionService.deleteCollectino(collection);
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
 		}
-		
-		return "deleteCollectionDone";
+		return result;
 	}
 	
 	@RequestMapping(value="/collection/insertCollection")
 	@ResponseBody
-	public String insertNewCollection(@RequestBody Collection collection)
+	public Result insertNewCollection(@RequestBody Collection collection)
 	{
 		Collection check;
-		try 
+		Result result = new Result();
+		check = collectionService.getCollectionByItemidAndUserId(collection);
+		if((check.getUser_id()==collection.getUser_id() && check.getItem_id()==collection.getItem_id()))
 		{
-			check = collectionService.getCollectionByItemidAndUserId(collection);
-			if((check.getUser_id()==collection.getUser_id() && check.getItem_id()==collection.getItem_id()))
-			{
-				return "collectionExist";
-			}
-			else
-			{
-				collectionService.inserNewCollection(collection);
-			}
+			result.setCode(ITEM_HAS_BEEN_IN_COLLECTION.getCode());
+			result.setMsg(ITEM_HAS_BEEN_IN_COLLECTION.getMsg());
 		}
-		catch(Exception e)
+		else
 		{
-			return "error"+e.getMessage();
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			collectionService.inserNewCollection(collection);
 		}
-		return "insertCollectionDone";
+		return result;
 	}
 	
 }

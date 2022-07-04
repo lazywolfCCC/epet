@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tree.moe.epet.entity.Address;
+import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.service.AddressService;
+
+import static tree.moe.epet.constant.ResultEnum.*;
 
 @RestController
 @CrossOrigin
@@ -29,25 +32,37 @@ public class AddressController {
 	
 	@RequestMapping(value="/address/addNewAddress")
 	@ResponseBody
-	public String addNewAddress(@RequestBody Address address)
+	public Result<String> addNewAddress(@RequestBody Address address)
 	{
 		addressService.insertNewAddress(address);
-		return "insertNewAddressDone";
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData("addNewAddressDone");
+		return result;
 	}
 	
 	@RequestMapping(value="/address/deleteAddress")
 	@ResponseBody
-	public String deleteAddress(@RequestBody Address address)
+	public Result deleteAddress(@RequestBody Address address)
 	{
 		addressService.deleteAddressById(address);
-		return "deleteAddressDone";
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData("deleteAddressDone");
+		return result;
 	}
 	
 	@RequestMapping(value="/address/updateAddress")
 	@ResponseBody
-	public String updateAddress(@RequestBody Address address)
+	public Result updateAddress(@RequestBody Address address)
 	{
 		addressService.updateAddress(address);
-		return "updateAddressDone";
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData("updateAddressDone");
+		return result;
 	}
 }

@@ -32,10 +32,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         //验证通过后， 这里测试取出JWT中存放的数据
         //获取 token 中的 userId
-        String userId = JwtUtil.getUserId(token);
+        //String userId = JwtUtil.getUserId(token);
         //获取 token 中的其他数据
-        Map<String, Object> info = JwtUtil.getInfo(token);
-        info.forEach((k, v) -> System.out.println(k + ":" + v));
+        //Map<String, Object> info = JwtUtil.getInfo(token);
+        //info.forEach((k, v) -> System.out.println(k + ":" + v));
         return true;
     }
 }

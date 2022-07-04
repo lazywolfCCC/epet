@@ -14,6 +14,7 @@ import static tree.moe.epet.constant.ResultEnum.*;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.entity.UserVO;
+import tree.moe.epet.exception.*;
 import tree.moe.epet.service.UserService;
 
 @RestController
@@ -27,7 +28,9 @@ public class UserController {
 	public User updateUserinfo(@RequestBody User userinfo)
 	{
 		userService.updateUserinfo(userinfo);
-		return userService.getUserByUsername(userinfo.getUsername());
+		UserVO uservo = new UserVO();
+		uservo.setUsername(userinfo.getUsername());
+		return userService.getUserByUsername(uservo);
 	}
 	
 	@RequestMapping(value="/user/getuserinfo")
@@ -35,21 +38,25 @@ public class UserController {
 	{
 		User user; 
 		System.out.println(username);
-		user = userService.getUserByUsername(username.getUsername());
+		user = userService.getUserByUsername(username);
 		return user;
 	}
 	
 	@RequestMapping(value="/user/register")
-	public Result registerNewUser(@RequestBody User user)
+	public Result registerNewUser(@RequestBody User user) throws Exception
 	{
 		UserVO uservo = new UserVO();
 		Result result = new Result();
+		uservo.setUsername(user.getUsername());
+		if(user.getPassword().length()<6||user.getPassword().length()>30)
+		{
+			throw new ParameterException();
+		}
 		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
 		
-		if(userService.getUserByUsername(user.getUsername())!=null)
+		if(userService.getUserByUsername(uservo)!=null)
 		{
-			result.setCode(USER_ALREADY_EXIST.getCode());
-			result.setMsg(USER_ALREADY_EXIST.getMsg());
+			throw new UserExistException();
 		}
 		else
 		{

@@ -1,5 +1,7 @@
 package tree.moe.epet.controller;
 
+import static tree.moe.epet.constant.ResultEnum.REQUEST_SUCCESS;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tree.moe.epet.entity.Cart;
+import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
+import tree.moe.epet.exception.CartExistException;
+import tree.moe.epet.exception.ParameterException;
 import tree.moe.epet.service.CartService;
+
+import static tree.moe.epet.constant.ResultEnum.*;
 
 @RestController
 @CrossOrigin
@@ -30,7 +37,7 @@ public class CartController {
 	
 	@RequestMapping(value="/cart/insertCart")
 	@ResponseBody
-	public String insertNewCart(@RequestBody Cart cart)
+	public Result insertNewCart(@RequestBody Cart cart) throws Exception
 	{
 		Cart check;
 		try
@@ -39,57 +46,66 @@ public class CartController {
 		}
 		catch(Exception e)
 		{
-			return "error";
+			throw new ParameterException();
 		}
 		if((cart.getSku_id()==check.getSku_id()) && (cart.getUser_id() == check.getUser_id()))
 		{
-			return "thisCartisAlreadyExist";
+			throw new CartExistException();
 		}
 		cartService.insertNewCart(cart);
 		
-		return "insertCartDone";
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData("insertCartDone");
+		return result;
 	}
 	
 	@RequestMapping(value="/cart/deleteCart")
 	@ResponseBody
-	public String deleteCart(@RequestBody Cart cart)
+	public Result deleteCart(@RequestBody Cart cart)
 	{
 		Cart check;
-		try
+		Result result = new Result();
+		check = cartService.getCartById(cart);
+		if(check == null)
 		{
-			check = cartService.getCartById(cart);
-			if(check == null)
-			{
-				return "noSuchCart";
-			}
+			result.setCode(NOT_SUCH_CART_ITEM.getCode());
+			result.setMsg(NOT_SUCH_CART_ITEM.getMsg());
+			result.setData("deleteCartFailed");
 		}
-		catch(Exception e)
+		else
 		{
-			return e.getMessage();
+			cartService.deleteItemFromCart(cart);
+			
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData("deleteCartDone");
 		}
-		cartService.deleteItemFromCart(cart);
-		return "deleteDone";
+		return result;
 	}
 
 	@RequestMapping(value="/cart/updateCart")
 	@ResponseBody
-	public String updateCart(@RequestBody Cart cart)
+	public Result updateCart(@RequestBody Cart cart)
 	{
 		Cart check;
-		try
+		Result result = new Result();
+		check = cartService.getCartById(cart);
+		if(check == null)
 		{
-			check = cartService.getCartById(cart);
-			if(check == null)
-			{
-				return "noSuchCart";
-			}
+			result.setCode(NOT_SUCH_CART_ITEM.getCode());
+			result.setMsg(NOT_SUCH_CART_ITEM.getMsg());
+			result.setData("updateCartFailed");
 		}
-		catch(Exception e)
+		else
 		{
-			return e.getMessage();
+			cartService.updateCartByid(cart);
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData("updateCartDone");
 		}
-		cartService.updateCartByid(cart);
-		return "updateCartDone";
+		return result;
 	}
 	
 }

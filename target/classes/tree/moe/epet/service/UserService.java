@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tree.moe.epet.entity.User;
+import tree.moe.epet.entity.UserVO;
 import tree.moe.epet.mapper.UserMapper;
 
 @Service
@@ -13,7 +14,7 @@ public class UserService {
 	@Autowired
 	UserMapper usermapper;
 	
-	public User getUserByUsername(String username)
+	public User getUserByUsername(UserVO username)
 	{
 		User user;
 		user = usermapper.getUserByUsername(username);

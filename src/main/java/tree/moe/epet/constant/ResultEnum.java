@@ -13,6 +13,7 @@ public enum ResultEnum {
 	//Cart result
 	ADD_CART_ITEM_FAILED(5101, "添加到购物车失败"),
 	NOT_SUCH_CART_ITEM(5102, "未找到该购物车项目"),
+	CART_EXIST(5103, "该购物车项目已存在"),
 	//Collection result
 	ITEM_HAS_BEEN_IN_COLLECTION(5201, "已经添加过收藏了"),
 	ADD_COLLECTION_ITEM_FAILED(5202, "添加到收藏失败"),
@@ -27,6 +28,8 @@ public enum ResultEnum {
 	//Address result
 	ADD_NEW_ADDRESS_FAILED(5501, "新增地址失败"),
 	NO_SUCH_ADDRESS_ITEM(5502, "未找到对应的地址项目"),
+	//History result
+	UPDATEVIEWTIME_SUECSS(5601,"更新观看时间成功"),
 	//Other result
 	REQUEST_SUCCESS(2000, "请求成功"),
 	PARAMS_INCORRECT(6001, "参数不正确"),

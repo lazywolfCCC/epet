@@ -33,7 +33,7 @@ public class LoginController {
 		User user;
 		Result<UserVO> result = new Result();
 		UserVO userVO = new UserVO();
-		user = userService.getUserByUsername(data.getUsername());
+		user = userService.getUserByUsername(data);
 		data.setPassword(DigestUtils.md5DigestAsHex(data.getPassword().getBytes()));
 		
 		if(user.getUsername() == null || user.getPassword() == null)

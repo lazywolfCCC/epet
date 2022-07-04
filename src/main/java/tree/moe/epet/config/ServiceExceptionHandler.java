@@ -18,4 +18,31 @@ public class ServiceExceptionHandler {
 		result.setMsg(TOKEN_VERIFIED_ERROR.getMsg());
 		return result;
 	}
+	
+	@ResponseBody
+	@ExceptionHandler({ParameterException.class})
+	public Result<String> userVOErrorException(){
+		Result<String> result = new Result<>();
+		result.setCode(PARAMS_INCORRECT.getCode());
+		result.setMsg(PARAMS_INCORRECT.getMsg());
+		return result;
+	}
+	
+	@ResponseBody
+	@ExceptionHandler({UserExistException.class})
+	public Result<String> UserExistException(){
+		Result<String> result = new Result<>();
+		result.setCode(USER_ALREADY_EXIST.getCode());
+		result.setMsg(USER_ALREADY_EXIST.getMsg());
+		return result;
+	}
+	
+	@ResponseBody
+	@ExceptionHandler({CartExistException.class})
+	public Result<String> CartExistException(){
+		Result<String> result = new Result<>();
+		result.setCode(CART_EXIST.getCode());
+		result.setMsg(CART_EXIST.getMsg());
+		return result;
+	}
 }

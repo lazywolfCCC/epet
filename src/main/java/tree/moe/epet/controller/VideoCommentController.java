@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.Video;
 import tree.moe.epet.entity.Video_comment;
 import tree.moe.epet.service.VideoCommentService;
+
+import static tree.moe.epet.constant.ResultEnum.*;
 
 @RestController
 @CrossOrigin
@@ -29,9 +32,12 @@ public class VideoCommentController {
 	
 	@RequestMapping(value="/comment/insertComment")
 	@ResponseBody
-	public String insertComment(@RequestBody Video_comment comment)
+	public Result insertComment(@RequestBody Video_comment comment)
 	{
 		commentService.insertNewComment(comment);
-		return "insertNewCommentDone";
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		return result;
 	}
 }
