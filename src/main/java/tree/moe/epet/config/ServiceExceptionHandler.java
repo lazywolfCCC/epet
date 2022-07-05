@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.exception.*;
 import static tree.moe.epet.constant.ResultEnum.*;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 @ControllerAdvice
 public class ServiceExceptionHandler {
@@ -20,7 +21,7 @@ public class ServiceExceptionHandler {
 	}
 	
 	@ResponseBody
-	@ExceptionHandler({ParameterException.class})
+	@ExceptionHandler({ParameterException.class , MissingServletRequestParameterException.class})
 	public Result<String> userVOErrorException(){
 		Result<String> result = new Result<>();
 		result.setCode(PARAMS_INCORRECT.getCode());
@@ -43,6 +44,28 @@ public class ServiceExceptionHandler {
 		Result<String> result = new Result<>();
 		result.setCode(CART_EXIST.getCode());
 		result.setMsg(CART_EXIST.getMsg());
+		return result;
+	}
+	
+	/* 运行时异常 */
+	@ResponseBody
+	@ExceptionHandler({ RuntimeException.class })
+	public Result<String> allException(RuntimeException e) {
+		Result<String> result = new Result<>();
+		result.setCode(UNKNOWN_ERROR.getCode());
+		result.setMsg(UNKNOWN_ERROR.getMsg() + ": " + e.getMessage());
+		e.printStackTrace();
+		return result;
+	}
+
+	/* 处理其他异常 */
+	@ResponseBody
+	@ExceptionHandler({ Exception.class })
+	public Result<String> allException(Exception e) {
+		Result<String> result = new Result<>();
+		result.setCode(UNKNOWN_ERROR.getCode());
+		result.setMsg(UNKNOWN_ERROR.getMsg() + ": " + e.getMessage());
+		e.printStackTrace();
 		return result;
 	}
 }

@@ -19,7 +19,7 @@ public enum ResultEnum {
 	ADD_COLLECTION_ITEM_FAILED(5202, "添加到收藏失败"),
 	NO_SUCH_COLLECTION_ITEM(5203, "未找到对应的收藏项目"),
 	//Book result
-	NOT_SUCH_ITEM(5301, "未找到对应的书籍"),
+	NOT_SUCH_ITEM(5301, "未找到对应的物品"),
 	//Comment result
 	NOT_SUCH_COMMENT_ITEM(5401, "未找到对应的评论项目"),
 	ADD_NEW_COMMENT_FAILED(5402, "添加新评论失败"),
@@ -33,7 +33,8 @@ public enum ResultEnum {
 	//Other result
 	REQUEST_SUCCESS(2000, "请求成功"),
 	PARAMS_INCORRECT(6001, "参数不正确"),
-	UNKNOWN_ERROR(5200, "服务器错误");
+	UNKNOWN_ERROR(5200, "服务器错误"),
+	REACH_ITEM_BOTTOM(5302,"没有更多了");
 	
 	private int code;
 	private String msg;

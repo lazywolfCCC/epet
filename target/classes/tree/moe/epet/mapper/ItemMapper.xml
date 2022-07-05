@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tree.moe.epet.mapper.ItemMapper">
+	<resultMap id="ItemMap" type="tree.moe.epet.entity.Item">
+		<id column="id" property="id"></id>
+		<id column="shop_id" property="shop_id"></id>
+		<id column="name" property="name"></id>
+		<id column="subtitle" property="subtitle"></id>
+		<id column="cat_id" property="cat_id"></id>
+		<id column="freight" property="freight"></id>
+		<id column="sales" property="sales"></id>
+		<id column="cover_img" property="cover_img"></id>
+		<association property="shop" select="tree.moe.epet.mapper.ShopMapper.getShop" column="shop_id"></association>
+	</resultMap>
+	<select id="getItem" resultMap="ItemMap">
+		select * from item where id = #{id};
+	</select>
+</mapper>

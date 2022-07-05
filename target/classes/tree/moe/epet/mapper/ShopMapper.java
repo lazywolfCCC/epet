@@ -15,4 +15,7 @@ public interface ShopMapper {
 	
 	@Select("Select * from shop")
 	List<Shop> getShops();
+	
+	@Select("Select * from shop where id=#{id}")
+	Shop getShop(long id);
 }

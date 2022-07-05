@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tree.moe.epet.entity.Item;
+import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
 import tree.moe.epet.entity.Shop;
 import tree.moe.epet.mapper.ItemMapper;
@@ -35,5 +36,10 @@ public class ItemService {
 	public List<Item> getItemsByShopId(Shop shop)
 	{
 		return itemMapper.getItemsByShopid(shop);
+	}
+	
+	public List<Item> getItemByPage(ItemVO itemvo)
+	{
+		return itemMapper.getItemByPage(itemvo);
 	}
 }
