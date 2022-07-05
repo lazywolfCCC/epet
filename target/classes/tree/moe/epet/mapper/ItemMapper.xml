@@ -15,4 +15,7 @@
 	<select id="getItem" resultMap="ItemMap">
 		select * from item where id = #{id};
 	</select>
+	<select id="getAllItems" resultMap="ItemMap">
+		select * from item 
+	</select>
 </mapper>

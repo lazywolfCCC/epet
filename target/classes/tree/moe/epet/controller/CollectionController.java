@@ -39,7 +39,7 @@ public class CollectionController {
 		User user = new User();
 		user.setId((int)info.get("id"));
 		
-		list = collectionService.getCollectionByUserid(user);
+		list = collectionService.getCollections(user.getId());
 		result.setCode(REQUEST_SUCCESS.getCode());
 		result.setMsg(REQUEST_SUCCESS.getMsg());
 		result.setData(list);

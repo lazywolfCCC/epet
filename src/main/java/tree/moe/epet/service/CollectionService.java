@@ -16,7 +16,7 @@ public class CollectionService {
 	
 	public List<Collection> getCollectionByUserid(User user)
 	{
-		return collectionMapper.getCollectionByUserid(user);
+		return collectionMapper.getAllCollectionsByUserid(user);
 	}
 	
 	public void inserNewCollection(Collection collection)
@@ -37,5 +37,10 @@ public class CollectionService {
 	public Collection getCollectionByItemidAndUserId(Collection collection)
 	{
 		return collectionMapper.getCollectionByUseridAndItemid(collection);
+	}
+	
+	public List<Collection> getCollections(long id)
+	{
+		return collectionMapper.getCollectionByUserId(id);
 	}
 }

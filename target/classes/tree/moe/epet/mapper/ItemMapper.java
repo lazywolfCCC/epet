@@ -13,7 +13,7 @@ import tree.moe.epet.entity.Shop;
 @Mapper
 public interface ItemMapper {
 
-	@Select("SELECT * FROM ITEM")
+	
 	List<Item> getAllItems();
 	
 	@Select("SELECT * FROM ITEM WHERE cat_id=#{id}")
@@ -29,4 +29,7 @@ public interface ItemMapper {
 	
 	@Select("Select * from item where cat_id=#{cat_id} limit #{left},#{right}")
 	List<Item> getItemByPage(ItemVO itemvo);
+	
+	@Select("Select * from item where name like #{keywords}")
+	List<Item> searchItem(String keywords);
 }

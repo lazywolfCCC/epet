@@ -11,7 +11,7 @@ import tree.moe.epet.entity.User;
 @Mapper
 public interface CollectionMapper {
 	@Select("SELECT * FROM COLLECTION WHERE user_id=#{id}")
-	List<Collection> getCollectionByUserid(User user);
+	List<Collection> getAllCollectionsByUserid(User user);
 	
 	@Select("SELECT * FROM COLLECTION WHERE id=#{id}")
 	Collection getCollectionByid(Collection colletion);
@@ -25,4 +25,6 @@ public interface CollectionMapper {
 	@Insert("insert into collection (user_id,flag,"
 			+ "item_id) values(#{user_id},#{flag},#{item_id})")
 	void insertNewCollection(Collection collection);
+	
+	List<Collection> getCollectionByUserId(long id);
 }

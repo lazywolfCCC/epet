@@ -78,4 +78,17 @@ public class ItemController {
 		result.setData(list);
 		return result;
 	}
+	
+	@RequestMapping(value="/item/search")
+	@ResponseBody
+	public Result searchItem(@RequestBody Item keywords) throws Exception 
+	{
+		Result<List<Item>> result = new Result();
+		List<Item> list = new ArrayList();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		list = itemService.searchItem("%"+keywords.getName()+"%");
+		result.setData(list);
+		return result;
+	}
 }

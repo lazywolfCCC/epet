@@ -121,12 +121,14 @@ public class CartController {
 		return result;
 	}
 	
-	@RequestMapping(value="/cart/test")
+	@RequestMapping(value="/cart/getCartitem")
 	@ResponseBody
-	public List<CartItem> getCartItem(/*@RequestBody User user*/)
+	public List<CartItem> getCartItem(HttpServletRequest request/*@RequestBody User user*/)
 	{
 		User user = new User();
-		user.setId(1);
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		user.setId((int)info.get("id"));
 		List<CartItem> list = cartService.getCartItem(user);
 		return list;
 	}

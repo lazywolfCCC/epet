@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tree.moe.epet.mapper.CollectionMapper">
+	<resultMap id="CollectionMap" type="tree.moe.epet.entity.Collection">
+		<id column="id" property="id"></id>
+		<id column="user_id" property="user_id"></id>
+		<id column="flag" property="flag"></id>
+		<id column="item_id" property="item_id"></id> 
+		<association property="item" select="tree.moe.epet.mapper.ItemMapper.getItem" column="item_id"></association>
+	</resultMap>
+	
+	<select id="getCollectionByUserId" resultMap="CollectionMap">
+		select * from collection where user_id = #{id};
+	</select>
+</mapper>

@@ -30,7 +30,7 @@ public class ItemService {
 	
 	public Item getItemById(Item item)
 	{
-		return itemMapper.getItemById(item);
+		return itemMapper.getItem(item.getId());
 	}
 	
 	public List<Item> getItemsByShopId(Shop shop)
@@ -41,5 +41,10 @@ public class ItemService {
 	public List<Item> getItemByPage(ItemVO itemvo)
 	{
 		return itemMapper.getItemByPage(itemvo);
+	}
+	
+	public List<Item> searchItem(String keywords)
+	{
+		return itemMapper.searchItem(keywords);
 	}
 }

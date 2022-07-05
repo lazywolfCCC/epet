@@ -54,8 +54,6 @@ public class LoginController {
 	        userVO.setToken(JwtUtil.sign("epet", info)) ;
 		}
 		result.setData(userVO);
-        
 		return result;
-
 	}
 }

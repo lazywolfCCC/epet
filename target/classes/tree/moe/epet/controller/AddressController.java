@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
+import tree.moe.epet.exception.TokenException;
 import tree.moe.epet.service.AddressService;
 import tree.moe.epet.util.JwtUtil;
 
@@ -28,9 +29,14 @@ public class AddressController {
 	
 	@RequestMapping(value="/address/getAddress")
 	@ResponseBody
-	public List<Address> getAddressByUserId(HttpServletRequest request/*,@RequestBody User user*/)
+	public List<Address> getAddressByUserId(HttpServletRequest request/*,@RequestBody User user*/) throws Exception
 	{
-		String token = request.getHeader("token");
+		String token = "";
+		token = request.getHeader("token");
+		if(token == "")
+		{
+			throw new TokenException();
+		}
 		Map<String, Object> info = JwtUtil.getInfo(token);
 		User user = new User();
 		user.setId((int)info.get("id"));
