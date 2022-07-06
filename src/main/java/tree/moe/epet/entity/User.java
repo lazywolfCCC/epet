@@ -11,6 +11,16 @@ public class User {
 	private int role;
 	private int is_enabled;//是否启用
 	private int default_address;//默认地址编号
+	private String token;
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public void setIs_enabled(int is_enabled) {
+		this.is_enabled = is_enabled;
+	}
 	public long getId() {
 		return id;
 	}

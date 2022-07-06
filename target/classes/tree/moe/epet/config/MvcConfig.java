@@ -27,7 +27,13 @@ public class MvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/register")
                 .excludePathPatterns("/item/**")
                 .excludePathPatterns("/cat/**")
-                .excludePathPatterns("/img/**");
+                .excludePathPatterns("/img/**")
+                .excludePathPatterns("/sku/**")
+                .excludePathPatterns("/img/**")
+                .excludePathPatterns("/shop/**")
+                .excludePathPatterns("/comment/getComment")
+                .excludePathPatterns("/comment/getCommentByPage")
+                .excludePathPatterns("/video/**");
     }
 
     /**

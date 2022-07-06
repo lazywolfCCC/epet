@@ -31,7 +31,7 @@ public class LoginController {
 	public Result checkLoginData(@RequestBody UserVO data) //check is username and password match
 	{
 		User user;
-		Result<UserVO> result = new Result();
+		Result result = new Result();
 		UserVO userVO = new UserVO();
 		user = userService.getUserByUsername(data);
 		data.setPassword(DigestUtils.md5DigestAsHex(data.getPassword().getBytes()));
@@ -40,7 +40,7 @@ public class LoginController {
 		{
 			result.setCode(NO_SUCH_USER.getCode());
 			result.setMsg(NO_SUCH_USER.getMsg());
-			result.setData(userVO);
+			
 		}
 		if(data.getPassword().equals(user.getPassword()))
 		{
@@ -51,9 +51,10 @@ public class LoginController {
 			Map<String, Object> info = new HashMap<>();
 	        info.put("username", user.getUsername());
 	        info.put("id", user.getId());
-	        userVO.setToken(JwtUtil.sign("epet", info)) ;
+	        user.setPassword("");
+	        user.setToken(JwtUtil.sign("epet", info));
+	        result.setData(user);
 		}
-		result.setData(userVO);
 		return result;
 	}
 }

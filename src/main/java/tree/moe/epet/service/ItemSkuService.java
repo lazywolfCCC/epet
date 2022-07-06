@@ -7,14 +7,16 @@ import org.springframework.stereotype.Service;
 
 import tree.moe.epet.entity.Item;
 import tree.moe.epet.entity.Item_sku;
+import tree.moe.epet.mapper.ItemSkuMapper;
+
 
 @Service
 public class ItemSkuService {
 	@Autowired
-	ItemSkuService skuService;
+	ItemSkuMapper skuMapper;
 	
 	public List<Item_sku> getItemSkuByItemid(Item item)
 	{
-		return skuService.getItemSkuByItemid(item);
+		return skuMapper.getItemSkuByItemid(item);
 	}
 }
