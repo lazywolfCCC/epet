@@ -26,9 +26,10 @@ public class AddressService {
 		addressMapper.updateAddress(address);
 	}
 	
-	public void insertNewAddress(Address address)
+	public Address insertNewAddress(Address address)
 	{
-		addressMapper.insertNewAddress(address);
+		addressMapper.insertAddress(address);
+		return address;
 	}
 	
 	public void deleteAddressById(Address address)

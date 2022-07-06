@@ -10,13 +10,13 @@ import tree.moe.epet.entity.User;
 
 @Mapper
 public interface CollectionMapper {
-	@Select("SELECT * FROM COLLECTION WHERE user_id=#{id}")
+	@Select("SELECT * FROM collection WHERE user_id=#{id}")
 	List<Collection> getAllCollectionsByUserid(User user);
 	
-	@Select("SELECT * FROM COLLECTION WHERE id=#{id}")
+	@Select("SELECT * FROM collection WHERE id=#{id}")
 	Collection getCollectionByid(Collection colletion);
 	
-	@Select("SELECT * FROM COLLECTION WHERE user_id=#{user_id} and item_id=#{item_id} and ")
+	@Select("SELECT * FROM collection WHERE user_id=#{user_id} and item_id=#{item_id} ")
 	Collection getCollectionByUseridAndItemid(Collection collection);
 	
 	@Delete("delete from collection where id=#{id}")

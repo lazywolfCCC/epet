@@ -20,7 +20,7 @@ public interface VideohistoryMapper {
 	@Delete("DELETE from videohistory where id=#{#id}")
 	void deleteHistory(Videohistory history);
 	
-	@Insert("INSERT INTO VIDEOHISTORY (user_id,video_id,viewtime) "
+	@Insert("INSERT INTO videohistory (user_id,video_id,viewtime) "
 			+ "values(#{user_id},#{video_id},#{viewtime})")
 	void insertNewHistory(Videohistory history);
 	

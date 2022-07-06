@@ -6,6 +6,7 @@ B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\AddressMapper.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\exception\TokenException.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\ItemCatMapper.java
+B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\util\JudgeParameter.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\CartItem.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\controller\UserController.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\service\AddressService.java
@@ -44,6 +45,7 @@ B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\controller\itemImgController.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\User.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\ItemMapper.java
+B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\exception\LackParameterException.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\VideoMapper.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\controller\CollectionController.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\Video.java
@@ -53,6 +55,7 @@ B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\Item_sku.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\VideohistoryMapper.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\service\CartService.java
+B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\exception\UserNoExistException.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\controller\AddressController.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\CommentVO.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\ShopMapper.java

@@ -15,8 +15,10 @@ import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.Shop;
+import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.exception.ParameterException;
 import tree.moe.epet.service.ItemService;
+import tree.moe.epet.util.JudgeParameter;
 
 import static tree.moe.epet.constant.ResultEnum.*;
 
@@ -36,22 +38,34 @@ public class ItemController {
 	
 	@RequestMapping(value="/item/getitemsBycat")
 	@ResponseBody
-	public List<Item> getItemsBycat(@RequestBody Item_cat cate)
+	public List<Item> getItemsBycat(@RequestBody Item_cat cate)throws Exception
 	{
+		if(cate.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		return itemService.getItemsByCategory(cate);
 	}
 	
 	@RequestMapping(value="/item/getItemById")
 	@ResponseBody
-	public Item getItemById(@RequestBody Item item)
+	public Item getItemById(@RequestBody Item item) throws Exception
 	{
+		if(item.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		return itemService.getItemById(item);
 	}
 	
 	@RequestMapping(value="/item/getItemByShopId")
 	@ResponseBody
-	public List<Item> getItemsByShopId(@RequestBody Shop shop)
+	public List<Item> getItemsByShopId(@RequestBody Shop shop) throws Exception
 	{
+		if(shop.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		return itemService.getItemsByShopId(shop);
 	}
 	
@@ -60,11 +74,21 @@ public class ItemController {
 	public Result getItemByPage(@RequestBody ItemVO item) throws Exception 
 	{
 		Result<List<Item>> result = new Result();
+
 		List<Item> list = new ArrayList();
+		
 		int count = 20;//设置每页返回的物品数量
 		item.setLeft(count*(item.getPage()-1));
 		item.setRight(count);
-		list = itemService.getItemByPage(item);
+		if(item.getCat_id()==0)
+		{
+			list = itemService.getItemByPage(item.getPage(),item.getLeft(),item.getRight());
+		}
+		else
+		{
+			list = itemService.getItemByPage(item.getPage(),item.getCat_id(),item.getLeft(),item.getRight());
+		}
+		
 		if(list.size() >= count)
 		{
 			result.setCode(REQUEST_SUCCESS.getCode());
@@ -83,6 +107,10 @@ public class ItemController {
 	@ResponseBody
 	public Result searchItem(@RequestBody Item keywords) throws Exception 
 	{
+		if(keywords.getName().isBlank())
+		{
+			throw new LackParameterException();
+		}
 		Result<List<Item>> result = new Result();
 		List<Item> list = new ArrayList();
 		result.setCode(REQUEST_SUCCESS.getCode());

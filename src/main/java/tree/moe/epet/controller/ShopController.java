@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tree.moe.epet.entity.Position;
 import tree.moe.epet.entity.Shop;
+import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.service.ShopService;
+import tree.moe.epet.util.JudgeParameter;
 
 @RestController
 @CrossOrigin
@@ -27,17 +29,25 @@ public class ShopController {
 	
 	@RequestMapping(value="/shop/getShopById")
 	@ResponseBody
-	public Shop getShop(@RequestBody Shop shop)
+	public Shop getShop(@RequestBody Shop shop)throws Exception
 	{
+		if(shop.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		return shopService.getShop(shop);
 	}
 	
 	@RequestMapping(value="/shop/getOrderedShop")
 	@ResponseBody
-	public List<Shop> getOrderedShop(@RequestBody Position pos)
+	public List<Shop> getOrderedShop(@RequestBody Position pos)throws Exception
 	{
 		List<Shop> list;
 		list = shopService.getShops();
+		if(pos.getLat()==0 || pos.getLng() == 0)
+		{
+			throw new LackParameterException();
+		}
 		GlobalCoordinates source = new GlobalCoordinates(pos.getLat(), pos.getLng());
 		for(Shop temp : list)
 		{

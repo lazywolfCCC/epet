@@ -14,7 +14,7 @@ public class UserService {
 	@Autowired
 	UserMapper usermapper;
 	
-	public User getUserByUsername(UserVO username)
+	public User getUserByUsername(String username)
 	{
 		User user;
 		user = usermapper.getUserByUsername(username);
@@ -29,5 +29,10 @@ public class UserService {
 	public void registrtNewUser(User user)
 	{
 		usermapper.registerNewUser(user);
+	}
+	
+	public void changeDefaultAddress(long address_id , long user_id)
+	{
+		usermapper.changeDefaultAddress(address_id, user_id);
 	}
 }

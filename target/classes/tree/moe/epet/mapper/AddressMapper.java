@@ -18,11 +18,13 @@ public interface AddressMapper {
 			+ "address_detail=#{address_detail},postal_code=#{postal_code} where id=#{id}")
 	void updateAddress(Address address);
 	
-	@Insert("insert into address (user_id,name,tel,province,city,county,"
-			+ "area_code,address_detail,postal_code)"
-			+ "values(#{user_id},#{name},#{tel},#{province},#{city},"
-			+ "#{county},#{area_code},#{address_detail},#{postal_code})")
-	void insertNewAddress(Address address);
+	/*
+	 * @Insert("insert into address (user_id,name,tel,province,city,county," +
+	 * "area_code,address_detail,postal_code)" +
+	 * "values(#{user_id},#{name},#{tel},#{province},#{city}," +
+	 * "#{county},#{area_code},#{address_detail},#{postal_code})")
+	 */
+	void insertAddress(Address address);
 	
 	@Delete("delete from address where id=#{id}")
 	void deleteAddressById(Address address);

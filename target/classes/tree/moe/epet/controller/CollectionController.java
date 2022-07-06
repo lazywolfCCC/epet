@@ -19,7 +19,9 @@ import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Collection;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
+import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.service.CollectionService;
+import tree.moe.epet.util.JudgeParameter;
 import tree.moe.epet.util.JwtUtil;
 
 @RestController
@@ -48,9 +50,13 @@ public class CollectionController {
 	
 	@RequestMapping(value="/collection/deleteCollection")
 	@ResponseBody
-	public Result deleteCollection(@RequestBody Collection collection)
+	public Result deleteCollection(@RequestBody Collection collection) throws Exception
 	{
 		Collection check;
+		if(collection.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		Result result = new Result();
 		check = collectionService.getCollectionByid(collection);
 		if(check==null)
@@ -69,22 +75,30 @@ public class CollectionController {
 	
 	@RequestMapping(value="/collection/insertCollection")
 	@ResponseBody
-	public Result insertNewCollection(@RequestBody Collection collection)
+	public Result insertNewCollection(@RequestBody Collection collection) throws Exception
 	{
 		Collection check;
 		Result result = new Result();
-		check = collectionService.getCollectionByItemidAndUserId(collection);
-		if((check.getUser_id()==collection.getUser_id() && check.getItem_id()==collection.getItem_id()))
+		if(collection.getUser_id()==0 || collection.getItem_id() == 0)
 		{
-			result.setCode(ITEM_HAS_BEEN_IN_COLLECTION.getCode());
-			result.setMsg(ITEM_HAS_BEEN_IN_COLLECTION.getMsg());
+			throw new LackParameterException();
 		}
-		else
+		check = collectionService.getCollectionByItemidAndUserId(collection);
+		if(check==null)
 		{
 			result.setCode(REQUEST_SUCCESS.getCode());
 			result.setMsg(REQUEST_SUCCESS.getMsg());
 			collectionService.inserNewCollection(collection);
 		}
+		else
+		{
+			if((check.getUser_id()==collection.getUser_id() && check.getItem_id()==collection.getItem_id()))
+			{
+				result.setCode(ITEM_HAS_BEEN_IN_COLLECTION.getCode());
+				result.setMsg(ITEM_HAS_BEEN_IN_COLLECTION.getMsg());
+			}
+		}
+		
 		return result;
 	}
 	

@@ -12,13 +12,13 @@ import tree.moe.epet.entity.User;
 @Mapper
 public interface CartMapper {
 
-	@Select("SELECT * FROM CART where user_id=#{id}")
+	@Select("SELECT * FROM cart where user_id=#{id}")
 	List<Cart> getCartByUserid(User user);
 	
-	@Select("SELECT * FROM CART where user_id=#{user_id} and sku_id=#{sku_id}")
+	@Select("SELECT * FROM cart where user_id=#{user_id} and sku_id=#{sku_id}")
 	Cart getCartByUseridAndSkuId(Cart cart);
 	
-	@Select("SELECT * FROM CART where id=#{id}")
+	@Select("SELECT * FROM cart where id=#{id}")
 	Cart getCartById(Cart cart);
 	
 	@Insert("insert into cart (user_id,sku_id,"

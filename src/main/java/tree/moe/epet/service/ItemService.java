@@ -38,9 +38,14 @@ public class ItemService {
 		return itemMapper.getItemsByShopid(shop);
 	}
 	
-	public List<Item> getItemByPage(ItemVO itemvo)
+	public List<Item> getItemByPage(int page,int left , int right)
 	{
-		return itemMapper.getItemByPage(itemvo);
+		return itemMapper.getItemByPage(page,left,right);
+	}
+	
+	public List<Item> getItemByPage(int page, long cat_id,int left , int right)
+	{
+		return itemMapper.getItemByPageWithCatid(page,cat_id,left,right);
 	}
 	
 	public List<Item> searchItem(String keywords)

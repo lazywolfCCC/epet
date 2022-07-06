@@ -27,8 +27,10 @@ tree\moe\epet\entity\User.class
 tree\moe\epet\Application.class
 tree\moe\epet\config\ServiceExceptionHandler.class
 tree\moe\epet\service\CollectionService.class
+tree\moe\epet\util\JudgeParameter.class
 tree\moe\epet\controller\ItemCatController.class
 tree\moe\epet\entity\Video_comment.class
+tree\moe\epet\exception\LackParameterException.class
 tree\moe\epet\controller\CollectionController.class
 tree\moe\epet\entity\ItemVO.class
 tree\moe\epet\mapper\CollectionMapper.class
@@ -44,6 +46,7 @@ tree\moe\epet\mapper\UserMapper.class
 tree\moe\epet\controller\VideoCommentController.class
 tree\moe\epet\service\UserService.class
 tree\moe\epet\service\VideoService.class
+tree\moe\epet\exception\UserNoExistException.class
 tree\moe\epet\mapper\ItemImgMapper.class
 tree\moe\epet\controller\ShopController.class
 tree\moe\epet\exception\TokenException.class

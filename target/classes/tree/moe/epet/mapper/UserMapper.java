@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserMapper {
 	
-	@Select("SELECT * FROM USER WHERE USERNAME=#{username}")
-	User getUserByUsername(UserVO user);//get user by username
+	@Select("SELECT * FROM user WHERE username=#{username}")
+	User getUserByUsername(String username);//get user by username
 	
-	@Select("SELECT * FROM USER WHERE id=#{id}")
+	@Select("SELECT * FROM user WHERE id=#{id}")
 	User getUserById(UserVO user);
 	
 	@Update("update user set username=#{username},password=#{password},"
@@ -25,6 +25,9 @@ public interface UserMapper {
 	@Insert("insert into user (username,password,nickname)"
 			+ "values(#{username},#{password},#{nickname})")
 	void registerNewUser(User user);
+	
+	@Update("update user set default_address=#{address_id} where id=#{user_id}")
+	void changeDefaultAddress(long address_id , long user_id);
 	
 }
 

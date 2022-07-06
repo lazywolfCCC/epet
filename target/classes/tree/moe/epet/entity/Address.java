@@ -11,6 +11,7 @@ public class Address {
 	private String area_code;
 	private String address_detail;
 	private String postal_code;
+	private boolean isDefault;
 	public long getId() {
 		return id;
 	}
@@ -71,5 +72,11 @@ public class Address {
 	public void setPostal_code(String postal_code) {
 		this.postal_code = postal_code;
 	}
-
+	public boolean isDefault() {
+		return isDefault;
+	}
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
+	}
+	
 }

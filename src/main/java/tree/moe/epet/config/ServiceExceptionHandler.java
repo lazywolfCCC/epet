@@ -30,6 +30,15 @@ public class ServiceExceptionHandler {
 	}
 	
 	@ResponseBody
+	@ExceptionHandler({UserNoExistException.class})
+	public Result<String> UserNoExistException(){
+		Result<String> result = new Result<>();
+		result.setCode(USER_ALREADY_EXIST.getCode());
+		result.setMsg(USER_ALREADY_EXIST.getMsg());
+		return result;
+	}
+	
+	@ResponseBody
 	@ExceptionHandler({UserExistException.class})
 	public Result<String> UserExistException(){
 		Result<String> result = new Result<>();
@@ -46,6 +55,16 @@ public class ServiceExceptionHandler {
 		result.setMsg(CART_EXIST.getMsg());
 		return result;
 	}
+	/* 缺少必要参数 */
+	@ResponseBody
+	@ExceptionHandler({LackParameterException.class})
+	public Result<String> LackParameterException(){
+		Result<String> result = new Result<>();
+		result.setCode(PARAMS_INCORRECT.getCode());
+		result.setMsg(PARAMS_INCORRECT.getMsg());
+		return result;
+	}
+	
 	
 	/* 运行时异常 */
 	@ResponseBody

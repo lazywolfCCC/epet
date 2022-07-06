@@ -13,4 +13,8 @@
 	<select id="getItemsku" resultMap="ItemskuMap">
 		select * from item_sku where id = #{id};
 	</select>
+	
+	<select id="getItemSkuByItemid" resultMap="ItemskuMap">
+		select * from item_sku where item_id = #{id};
+	</select>
 </mapper>

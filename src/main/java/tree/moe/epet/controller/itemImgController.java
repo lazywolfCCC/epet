@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import tree.moe.epet.entity.Item;
 import tree.moe.epet.entity.Item_img;
+import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.service.ItemImgService;
 
 @RestController
@@ -17,8 +18,12 @@ public class itemImgController {
 	
 	@RequestMapping(value="/img/getItemImgs")
 	@ResponseBody
-	public List<Item_img> getItemImgs(@RequestBody Item item)
+	public List<Item_img> getItemImgs(@RequestBody Item item) throws Exception
 	{
+		if(item.getId()==0)
+		{
+			throw new LackParameterException();
+		}
 		return imgService.getItemImgs(item);
 	}
 }

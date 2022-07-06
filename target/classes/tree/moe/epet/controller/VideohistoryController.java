@@ -34,7 +34,9 @@ public class VideohistoryController {
 	public Result<List<Videohistory>> getAllHistoryById(@RequestBody UserVO user) throws Exception
 	{
 		Result result = new Result<List<Videohistory>>();
-		if(user.getId() == 0 || userService.getUserByUsername(null)==null )
+		UserVO check;
+		
+		if(user.getId() == 0 || userService.getUserByUsername(user.getUsername())==null )
 		{
 			throw new ParameterException();
 		}

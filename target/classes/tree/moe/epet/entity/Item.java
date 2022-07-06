@@ -9,6 +9,8 @@ public class Item {
 	private double freight;
 	private int sales;
 	private String cover_img;
+	private int flag;
+	private double price;
 	private Shop shop;
 	public long getId() {
 		return id;
@@ -63,6 +65,18 @@ public class Item {
 	}
 	public void setShop(Shop shop) {
 		this.shop = shop;
+	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	
 	
