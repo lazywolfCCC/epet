@@ -10,6 +10,9 @@ import tree.moe.epet.entity.Video;
 @Mapper
 public interface VideoMapper {
 
-	@Select("SELECT * FROM video")
+	
 	List<Video> getAllVideo(); 
+	
+	
+	Video getVideoById(long id); 
 }

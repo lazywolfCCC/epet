@@ -14,7 +14,7 @@ public interface UserMapper {
 	User getUserByUsername(String username);//get user by username
 	
 	@Select("SELECT * FROM user WHERE id=#{id}")
-	User getUserById(UserVO user);
+	User getUserById(long id);
 	
 	@Update("update user set username=#{username},password=#{password},"
 			+ "nickname=#{nickname},telephone=#{telephone},sex=#{sex},"
@@ -28,6 +28,9 @@ public interface UserMapper {
 	
 	@Update("update user set default_address=#{address_id} where id=#{user_id}")
 	void changeDefaultAddress(long address_id , long user_id);
+	
+	@Select("SELECT id,username,nickname,telephone,sex,signature,is_enabled,default_address FROM user WHERE id=#{id}")
+	User getUserWithOutPasswordById(long id);
 	
 }
 

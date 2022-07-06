@@ -6,7 +6,11 @@ public class Video {
 	private String url;
 	private int like_num;
 	private int collect_num;
+	private String description;
+	private String title;
+	private String stamp;
 	private long item_id;
+	private User user;
 	public long getId() {
 		return id;
 	}
@@ -43,5 +47,30 @@ public class Video {
 	public void setItem_id(long item_id) {
 		this.item_id = item_id;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public String getStamp() {
+		return stamp;
+	}
+	public void setStamp(String stamp) {
+		this.stamp = stamp;
+	}
+	
 	
 }

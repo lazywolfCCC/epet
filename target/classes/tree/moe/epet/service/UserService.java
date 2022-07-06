@@ -35,4 +35,9 @@ public class UserService {
 	{
 		usermapper.changeDefaultAddress(address_id, user_id);
 	}
+	
+	public User getUserWithOutPasswordById(long id)
+	{
+		return usermapper.getUserById(id);
+	}
 }

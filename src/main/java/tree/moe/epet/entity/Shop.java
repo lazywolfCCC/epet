@@ -16,6 +16,13 @@ public class Shop {
 	private double lng;//经度
 	private String description;
 	private double distance;
+	private String img;
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public double getDistance() {
 		return distance;
 	}

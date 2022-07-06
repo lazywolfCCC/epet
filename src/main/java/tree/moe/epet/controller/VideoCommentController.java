@@ -48,7 +48,7 @@ public class VideoCommentController {
 		{
 			comment.setCreate_time(new Date());
 		}
-		if(comment.getContent().isBlank() || comment.getVideo_id()==0 || comment.getUser_id() ==0 )
+		if(comment.getContent().isEmpty() || comment.getVideo_id()==0 || comment.getUser_id() ==0 )
 		{
 			throw new LackParameterException();
 		}

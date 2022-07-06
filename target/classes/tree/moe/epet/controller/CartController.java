@@ -61,8 +61,7 @@ public class CartController {
 	public Result insertNewCart(@RequestBody Cart cart) throws Exception
 	{
 		Cart check;
-		if(cart.getUser_id()==0 || cart.getSku_id()==0 || cart.getShop_id()==0||cart.getOri_price()<0.00001
-				|| cart.getNum()==0)
+		if(cart.getUser_id()==0 || cart.getSku_id()==0 || cart.getShop_id()==0||cart.getOri_price()<0.00001|| cart.getNum()==0)
 		{
 			throw new LackParameterException();
 		}
@@ -137,9 +136,7 @@ public class CartController {
 			throw new ParameterException();
 		}
 		
-		if(cart.getId()==0||cart.getUser_id()==0 || cart.getSku_id()==0 
-				|| cart.getShop_id()==0||cart.getOri_price()<0.00001
-				|| cart.getNum()==0)
+		if(cart.getId()==0||cart.getUser_id()==0 || cart.getSku_id()==0 || cart.getShop_id()==0||cart.getOri_price()<0.00001|| cart.getNum()==0)
 		{
 			throw new LackParameterException();
 		}

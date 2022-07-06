@@ -36,4 +36,9 @@ public class AddressService {
 	{
 		addressMapper.deleteAddressById(address);
 	}
+	
+	public Address getAddressById(long id)
+	{
+		return addressMapper.getAddressById(id);
+	}
 }

@@ -34,7 +34,8 @@ public enum ResultEnum {
 	REQUEST_SUCCESS(2000, "请求成功"),
 	PARAMS_INCORRECT(6001, "参数不正确"),
 	UNKNOWN_ERROR(5200, "服务器错误"),
-	REACH_ITEM_BOTTOM(5302,"没有更多了");
+	REACH_ITEM_BOTTOM(5302,"没有更多了"),
+	NO_PERMISION(5303,"没有访问权限");
 	
 	private int code;
 	private String msg;

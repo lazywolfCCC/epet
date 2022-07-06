@@ -107,7 +107,7 @@ public class ItemController {
 	@ResponseBody
 	public Result searchItem(@RequestBody Item keywords) throws Exception 
 	{
-		if(keywords.getName().isBlank())
+		if(keywords.getName().isEmpty())
 		{
 			throw new LackParameterException();
 		}

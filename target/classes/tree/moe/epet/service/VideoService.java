@@ -17,4 +17,9 @@ public class VideoService {
 	{
 		return videoMapper.getAllVideo();
 	} 
+	
+	public Video getVideoById(long id) 
+	{
+		return videoMapper.getVideoById(id);
+	} 
 }
