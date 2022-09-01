@@ -42,6 +42,7 @@ tree\moe\epet\controller\LoginController.class
 tree\moe\epet\mapper\AddressMapper.class
 tree\moe\epet\entity\CommentVO.class
 tree\moe\epet\exception\UserExistException.class
+tree\moe\epet\exception\ObjectNoFoundException.class
 tree\moe\epet\mapper\UserMapper.class
 tree\moe\epet\controller\VideoCommentController.class
 tree\moe\epet\service\UserService.class

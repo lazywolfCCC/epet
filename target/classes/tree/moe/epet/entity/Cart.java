@@ -10,6 +10,11 @@ public class Cart {
 	public long getId() {
 		return id;
 	}
+	@Override
+	public String toString() {
+		return "Cart [id=" + id + ", user_id=" + user_id + ", sku_id=" + sku_id + ", shop_id=" + shop_id
+				+ ", ori_price=" + ori_price + ", num=" + num + "]";
+	}
 	public void setCart(long id) {
 		this.id = id;
 	}

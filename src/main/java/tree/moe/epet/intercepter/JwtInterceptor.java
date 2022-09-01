@@ -21,8 +21,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         //从 http 请求头中取出 token
         String token = request.getHeader("token");
-        System.out.println("此处测试是否拿到了token：" + token);
-
         if (token == null) {
             throw new TokenException();
         }
@@ -32,8 +30,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         //验证通过后， 这里测试取出JWT中存放的数据
         //获取 token 中的其他数据
-        Map<String, Object> info = JwtUtil.getInfo(token);
-        info.forEach((k, v) -> System.out.println(k + ":" + v));
         return true;
     }
 }

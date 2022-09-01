@@ -146,10 +146,8 @@ public class AddressController {
 		{
 			throw new LackParameterException();
 		}
-		if(address.getUser_id()!=(long)(int)info.get("id"))
-		{
-			throw new ParameterException();
-		}
+		
+		address.setUser_id((int)info.get("id"));
 		if(address.isDefault())
 		{
 			userService.changeDefaultAddress(address.getId(),(long)(int)info.get("id") );

@@ -20,6 +20,7 @@ import tree.moe.epet.entity.Collection;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.exception.LackParameterException;
+import tree.moe.epet.exception.ParameterException;
 import tree.moe.epet.service.CollectionService;
 import tree.moe.epet.util.JudgeParameter;
 import tree.moe.epet.util.JwtUtil;
@@ -75,7 +76,7 @@ public class CollectionController {
 	
 	@RequestMapping(value="/collection/insertCollection")
 	@ResponseBody
-	public Result insertNewCollection(@RequestBody Collection collection) throws Exception
+	public Result insertNewCollection(HttpServletRequest request,@RequestBody Collection collection) throws Exception
 	{
 		Collection check;
 		Result result = new Result();
@@ -83,6 +84,9 @@ public class CollectionController {
 		{
 			throw new LackParameterException();
 		}
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		collection.setUser_id((int)info.get("id"));
 		check = collectionService.getCollectionByItemidAndUserId(collection);
 		if(check==null)
 		{

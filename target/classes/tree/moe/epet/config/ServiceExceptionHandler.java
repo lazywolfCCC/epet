@@ -20,6 +20,8 @@ public class ServiceExceptionHandler {
 		return result;
 	}
 	
+	
+	
 	@ResponseBody
 	@ExceptionHandler({ParameterException.class , MissingServletRequestParameterException.class})
 	public Result<String> userVOErrorException(){
@@ -65,6 +67,13 @@ public class ServiceExceptionHandler {
 		return result;
 	}
 	
+	public Result<String> LackParameterException(String message){
+		Result<String> result = new Result<>();
+		result.setCode(PARAMS_INCORRECT.getCode());
+		result.setMsg(PARAMS_INCORRECT.getMsg());
+		System.out.println(message);
+		return result;
+	}
 	
 	/* 运行时异常 */
 	@ResponseBody

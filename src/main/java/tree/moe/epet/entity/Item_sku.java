@@ -43,6 +43,11 @@ public class Item_sku {
 	public void setItem(Item item) {
 		this.item = item;
 	}
+	@Override
+	public String toString() {
+		return "Item_sku [id=" + id + ", item_id=" + item_id + ", name=" + name + ", price=" + price + ", img=" + img
+				+ ", item=" + item + "]";
+	}
 	
 	
 }

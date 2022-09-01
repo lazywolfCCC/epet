@@ -19,4 +19,9 @@ public class ItemSkuService {
 	{
 		return skuMapper.getItemSkuByItemid(item.getId());
 	}
+	
+	public Item_sku getItemSkuById(long id)
+	{
+		return skuMapper.getItemsku(id);
+	}
 }

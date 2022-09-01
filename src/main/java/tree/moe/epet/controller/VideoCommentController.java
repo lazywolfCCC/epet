@@ -3,6 +3,9 @@ package tree.moe.epet.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +23,7 @@ import tree.moe.epet.entity.Video_comment;
 import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.service.VideoCommentService;
 import tree.moe.epet.util.JudgeParameter;
+import tree.moe.epet.util.JwtUtil;
 
 import static tree.moe.epet.constant.ResultEnum.*;
 
@@ -42,12 +46,16 @@ public class VideoCommentController {
 	
 	@RequestMapping(value="/comment/insertComment")
 	@ResponseBody
-	public Result insertComment(@RequestBody Video_comment comment) throws Exception
+	public Result insertComment(HttpServletRequest request,@RequestBody Video_comment comment) throws Exception
 	{
+		String token = "";
+		token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
 		if(comment.getCreate_time()==null)
 		{
 			comment.setCreate_time(new Date());
 		}
+		comment.setUser_id((int)info.get("id"));
 		if(comment.getContent().isEmpty() || comment.getVideo_id()==0 || comment.getUser_id() ==0 )
 		{
 			throw new LackParameterException();

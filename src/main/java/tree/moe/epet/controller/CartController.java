@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import tree.moe.epet.entity.Address;
 import tree.moe.epet.entity.Cart;
 import tree.moe.epet.entity.CartItem;
+import tree.moe.epet.entity.Item_sku;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.User;
-import tree.moe.epet.exception.CartExistException;
-import tree.moe.epet.exception.LackParameterException;
-import tree.moe.epet.exception.ParameterException;
-import tree.moe.epet.exception.TokenException;
+import tree.moe.epet.exception.*;
+
 import tree.moe.epet.service.*;
 import tree.moe.epet.util.JudgeParameter;
 import tree.moe.epet.util.JwtUtil;
@@ -39,6 +39,9 @@ public class CartController {
 	
 	@Autowired
 	ItemService itemService;
+	
+	@Autowired
+	ItemSkuService itemskuService;
 	
 	@RequestMapping(value="/cart/getCart")
 	@ResponseBody
@@ -58,22 +61,33 @@ public class CartController {
 	
 	@RequestMapping(value="/cart/insertCart")
 	@ResponseBody
-	public Result insertNewCart(@RequestBody Cart cart) throws Exception
+	public Result insertNewCart(HttpServletRequest request,@RequestBody Cart cart) throws Exception
 	{
 		Cart check;
-		if(cart.getUser_id()==0 || cart.getSku_id()==0 || cart.getShop_id()==0||cart.getOri_price()<0.00001|| cart.getNum()==0)
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(info.get("id")==null)
 		{
-			throw new LackParameterException();
+			throw new TokenException();
+		}
+		cart.setUser_id((int)info.get("id"));
+		if(cart.getSku_id() == 0)
+		{
+			//System.out.println("lack sku_id");
+			throw new LackParameterException("lack sku_id");
 		}
 		try
 		{
 			check = cartService.getCartByUserIdAndSkuId(cart);
-			
 		}
-		catch(Exception e)
+		catch(MyBatisSystemException e)
 		{
-			throw new ParameterException();
+			System.out.println(e.getMessage());
+			check = null;
 		}
+		Item_sku itemsku = itemskuService.getItemSkuById(cart.getSku_id());
+		cart.setOri_price(itemsku.getPrice());
+		cart.setShop_id(itemsku.getItem().getShop_id());
 		if(check!=null)
 		{
 			if((cart.getSku_id()==check.getSku_id()) && (cart.getUser_id() == check.getUser_id()) )
@@ -131,15 +145,9 @@ public class CartController {
 			throw new TokenException();
 		}
 		Map<String, Object> info = JwtUtil.getInfo(token);
-		if((long)info.get("id")!=cart.getUser_id())
-		{
-			throw new ParameterException();
-		}
 		
-		if(cart.getId()==0||cart.getUser_id()==0 || cart.getSku_id()==0 || cart.getShop_id()==0||cart.getOri_price()<0.00001|| cart.getNum()==0)
-		{
-			throw new LackParameterException();
-		}
+		cart.setUser_id((int)info.get("id"));
+		
 		Result result = new Result();
 		check = cartService.getCartById(cart);
 		if(check == null)
@@ -164,7 +172,7 @@ public class CartController {
 	{
 		User user = new User();
 		String token = request.getHeader("token");
-		if(token.isBlank())
+		if(token.isEmpty())
 		{
 			throw new TokenException();
 		}

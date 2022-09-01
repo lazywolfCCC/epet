@@ -11,8 +11,8 @@ import tree.moe.epet.entity.Video_comment;
 @Mapper
 public interface VideoCommentMapper {
 
-	@Select("Select * from video_comment where video_id=#{id} ")
-	List<Video_comment> getCommentByvideoId(Video video);
+	@Select("Select * from video_comment  where video_id=#{id}  ")
+	List<Video_comment> getCommentByvideoId(long id);
 	
 	@Insert("Insert into video_comment (video_id,user_id,content,is_parent"
 			+ ",parent_id,create_time,reply_to,is_unread)values(#{video_id},"
@@ -20,7 +20,7 @@ public interface VideoCommentMapper {
 			+ "#{reply_to},#{is_unread})")
 	void insertNewComment(Video_comment comment);
 	
-	@Select("Select * from video_comment  where video_id=#{video_id} order by id desc limit #{left},#{right} ")
-	List<Video_comment> getCommentByPage(CommentVO commentvo);
+	
+	List<Video_comment> getCommentByPage(long video_id,int left,int right);
 	
 }

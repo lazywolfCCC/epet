@@ -39,10 +39,8 @@ public class UserController {
 		String token = "";
 		token = request.getHeader("token");
 		Map<String, Object> info = JwtUtil.getInfo(token);
-		if((long)info.get("id")==userinfo.getId())
-		{
-			throw new ParameterException();
-		}
+		userinfo.setId((int)info.get("id"));
+		
 		if(JudgeParameter.validateFild(userinfo))
 		{
 			throw new LackParameterException();
@@ -78,7 +76,7 @@ public class UserController {
 		UserVO uservo = new UserVO();
 		Result result = new Result();
 		uservo.setUsername(user.getUsername());
-		System.out.println(user.toString());
+		
 		if(user.getPassword().length()<6||user.getPassword().length()>30||user.getUsername().length()<6)
 		{
 			throw new ParameterException();

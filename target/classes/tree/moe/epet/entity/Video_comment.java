@@ -12,6 +12,7 @@ public class Video_comment {
 	private Date create_time;
 	private long reply_to;
 	private int is_unread;
+	private User user;
 	public long getId() {
 		return id;
 	}
@@ -65,6 +66,12 @@ public class Video_comment {
 	}
 	public void setIs_unread(int is_unread) {
 		this.is_unread = is_unread;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

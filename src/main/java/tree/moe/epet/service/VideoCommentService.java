@@ -18,7 +18,7 @@ public class VideoCommentService {
 	
 	public List<Video_comment> getCommentByVideoId(Video video)
 	{
-		return commentMapper.getCommentByvideoId(video);
+		return commentMapper.getCommentByvideoId(video.getId());
 	}
 	
 	public void insertNewComment(Video_comment comment)
@@ -27,6 +27,6 @@ public class VideoCommentService {
 	}
 	
 	public List<Video_comment> getCommentByPage(CommentVO commentvo){
-		return commentMapper.getCommentByPage(commentvo);
+		return commentMapper.getCommentByPage(commentvo.getVideo_id(),commentvo.getLeft(),commentvo.getRight());
 	}
 }
