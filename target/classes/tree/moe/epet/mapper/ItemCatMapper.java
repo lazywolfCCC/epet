@@ -11,4 +11,7 @@ import tree.moe.epet.entity.Item_cat;
 public interface ItemCatMapper {
 	@Select("SELECT * FROM item_cat")
 	List<Item_cat> getAllCat();
+	
+	@Select("SELECT * FROM item_cat where parent_id =#{id}")
+	List<Item_cat> getItemCatById(long id);
 }

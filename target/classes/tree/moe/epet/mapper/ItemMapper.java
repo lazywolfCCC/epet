@@ -33,6 +33,9 @@ public interface ItemMapper {
 	@Select("Select * from item where cat_id=#{cat_id} limit #{left},#{right}")
 	List<Item> getItemByPageWithCatid(int page , long cat_id , int left , int right);
 	
-	@Select("Select * from item where name like #{keywords}")
-	List<Item> searchItem(String keywords);
+	/*@Select("Select * from item where name like #{keywords} limit #{left},#{right}")
+	List<Item> searchItem(String keywords , int left , int right);*/
+	
+	//@Select("Select * from item where name like #{keywords} order by #{orderkey} limit #{left},#{right}")
+	List<Item> searchItem(String keywords , int left , int right ,String orderkey ,String sequence,long cat_id);
 }

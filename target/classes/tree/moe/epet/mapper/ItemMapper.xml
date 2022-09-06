@@ -18,4 +18,22 @@
 	<select id="getAllItems" resultMap="ItemMap">
 		select * from item 
 	</select>
+	<select id="searchItem" resultMap="ItemMap">
+		SELECT * FROM item where 1 = 1 
+		<if test="keywords!=''">
+		AND (name like '%${keywords}%' OR subtitle like '%${keywords}%')
+		</if>
+		<if test="cat_id !=0">
+		AND cat_id = #{cat_id} 
+		</if>
+		<if test="orderkey != ''">
+			order by ${orderkey} ${sequence} 
+		</if>
+		
+		<if test="orderkey == ''">
+			order by `id` 
+		</if>
+		limit #{left},#{right}
+		
+	</select>
 </mapper>
