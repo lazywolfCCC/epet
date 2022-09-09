@@ -15,6 +15,7 @@ import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.Shop;
+import tree.moe.epet.entity.ShopVO;
 import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.exception.ParameterException;
 import tree.moe.epet.service.ItemCatService;
@@ -64,13 +65,20 @@ public class ItemController {
 	
 	@RequestMapping(value="/item/getItemByShopId")
 	@ResponseBody
-	public List<Item> getItemsByShopId(@RequestBody Shop shop) throws Exception
+	public List<Item> getItemsByShopId(@RequestBody ShopVO shopvo) throws Exception
 	{
-		if(shop.getId()==0)
+		int count = 20;
+		if(shopvo.getId()==0)
 		{
 			throw new LackParameterException();
 		}
-		return itemService.getItemsByShopId(shop);
+		if(shopvo.getPage() <= 0)
+		{
+			shopvo.setPage(0);
+		}
+		int left = count * (shopvo.getPage()-1);
+		int right = count;
+		return itemService.getItemsByShopId(shopvo.getId(),left,right);
 	}
 	
 	@RequestMapping(value="/item/getItemsByPage")

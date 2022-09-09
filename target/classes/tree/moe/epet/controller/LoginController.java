@@ -44,8 +44,16 @@ public class LoginController {
 		}
 		if(data.getPassword().equals(user.getPassword()))
 		{
-			result.setCode(LOGIN_SUCCESS.getCode());
-			result.setMsg(LOGIN_SUCCESS.getMsg());
+			if(user.getRole()==0)
+			{
+				result.setCode(LOGIN_SUCCESS.getCode());
+				result.setMsg(LOGIN_SUCCESS.getMsg());
+			}
+			else
+			{
+				result.setCode(NO_PERMISION.getCode());
+				result.setMsg(NO_PERMISION.getMsg());
+			}
 			userVO.setId((long)user.getId());
 			userVO.setUsername(user.getUsername());
 			Map<String, Object> info = new HashMap<>();

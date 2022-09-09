@@ -96,4 +96,13 @@ public class ServiceExceptionHandler {
 		e.printStackTrace();
 		return result;
 	}
+	
+	@ResponseBody
+	@ExceptionHandler({AuthorityException.class})
+	public Result<String> AuthorityException(){
+		Result<String> result = new Result<>();
+		result.setCode(NO_PERMISION.getCode());
+		result.setMsg(NO_PERMISION.getMsg());
+		return result;
+	}
 }

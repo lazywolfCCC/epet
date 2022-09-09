@@ -33,9 +33,9 @@ public class ItemService {
 		return itemMapper.getItem(item.getId());
 	}
 	
-	public List<Item> getItemsByShopId(Shop shop)
+	public List<Item> getItemsByShopId(long shop_id,int left,int right)
 	{
-		return itemMapper.getItemsByShopid(shop);
+		return itemMapper.getItemsByShopid(shop_id,left,right);
 	}
 	
 	public List<Item> getItemByPage(int page,int left , int right)

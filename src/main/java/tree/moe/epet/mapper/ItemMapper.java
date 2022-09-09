@@ -22,8 +22,10 @@ public interface ItemMapper {
 	@Select("SELECT * FROM item WHERE ID=#{id}")
 	Item getItemById(Item item);
 	
-	@Select("Select * from item where shop_id=#{id}")
-	List<Item> getItemsByShopid(Shop shop);
+	@Select("Select * from item where shop_id=#{shop_id} limit #{left},#{right}")
+	List<Item> getItemsByShopid(long shop_id,int left , int right);
+	
+	
 	
 	Item getItem(long id);
 	

@@ -11,6 +11,7 @@ public class User {
 	private int role;
 	private int is_enabled;//是否启用
 	private int default_address;//默认地址编号
+	private int rank;
 	private String token;
 	public String getToken() {
 		return token;
