@@ -32,19 +32,19 @@
 		update orderlist 
 		<set>
 			<if test="pay_time != null">
-			pay_time = #{pay_time}
+			pay_time = #{pay_time},
 			</if>
-			<if test="delivery_time">
-			delivery_time = #{delivery_time}
+			<if test="delivery_time != null">
+			delivery_time = #{delivery_time},
 			</if>
-			<if test="order_settlement_time">
-			order_settlement_time = #{order_settlement_time}
+			<if test="order_settlement_time!= null">
+			order_settlement_time = #{order_settlement_time},
 			</if>
 			<if test="address_id != 0">
-			address_id = #{address_id} 
+			address_id = #{address_id} ,
 			</if>
-			<if test="order_status">
-			order_status = #{order_status}
+			<if test="order_status != 0">
+			order_status = #{order_status},
 			</if>
 		</set>
 		where id = #{id}

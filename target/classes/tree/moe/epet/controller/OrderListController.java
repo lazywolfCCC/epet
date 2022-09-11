@@ -51,7 +51,7 @@ public class OrderListController {
 		{
 			throw new AuthorityException();
 		}
-		List<OrderList> list = orderlistService.getOrderlistByUserid(Long.valueOf(info.get("id").toString()), left, right);
+		List<OrderList> list = orderlistService.getOrderlistByUserid(orderlistvo.getUser_id(), left, right);
 		if(orderlistvo.getPage() == 0)
 		{
 			orderlistvo.setPage(0);
@@ -153,6 +153,18 @@ public class OrderListController {
 		Result result = new Result();
 		String token = request.getHeader("token");
 		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(orderlistvo.getOrder_status() == 2)
+		{
+			orderlistvo.setDelivery_time(new Date());
+		}
+		if(orderlistvo.getOrder_status()==1)
+		{
+			orderlistvo.setPay_time(new Date());
+		}
+		if(orderlistvo.getOrder_status()==-4)
+		{
+			orderlistvo.setOrder_settlement_time(new Date());
+		}
 		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
 		{
 			throw new AuthorityException();
@@ -191,9 +203,9 @@ public class OrderListController {
 	
 	@RequestMapping(value="/orderlist/getOrderItemsByOrderListId")
 	@ResponseBody
-	public Result getOrderItemsByOrderListId(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo)throws Exception
+	public Result<List<Order_item>> getOrderItemsByOrderListId(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo)throws Exception
 	{
-		Result result = new Result();
+		Result<List<Order_item>> result = new Result();
 		String token = request.getHeader("token");
 		Map<String, Object> info = JwtUtil.getInfo(token);
 		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
@@ -204,9 +216,10 @@ public class OrderListController {
 		{
 			throw new TokenException();
 		}
-		orderlistService.getOrderItemsByOrderlistid(orderlistvo.getId());
+		List<Order_item> list =orderlistService.getOrderItemsByOrderlistid(orderlistvo.getId());
 		result.setCode(REQUEST_SUCCESS.getCode());
 		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(list);
 		return result;
 	}
 }
