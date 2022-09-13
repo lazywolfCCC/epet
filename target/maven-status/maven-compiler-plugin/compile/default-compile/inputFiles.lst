@@ -65,7 +65,6 @@ B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\mapper\VideohistoryMapper.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\service\CartService.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\exception\AuthorityException.java
-B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\config\RabbitMqConfig.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\exception\UserNoExistException.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\controller\AddressController.java
 B:\download\epet-6c4a5d567db68a243ff57e6b6da19999a0fb6932\src\main\java\tree\moe\epet\entity\CommentVO.java

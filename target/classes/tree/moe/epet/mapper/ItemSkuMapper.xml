@@ -17,4 +17,35 @@
 	<select id="getItemSkuByItemid" resultMap="ItemskuMap">
 		select * from item_sku where item_id = #{id};
 	</select>
+	
+	<!-- Natuki Added Below -->
+	<!-- Natuki Added Below -->
+	<!-- Natuki Added Below -->
+	
+	<select id="getSkuNumByItemId" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM item_sku WHERE item_id = #{itemId};
+	</select>
+	
+	<select id = "getSkuListBasic" resultType="tree.moe.epet.entity.Item_sku">
+		SELECT id, item_id, name, price, img FROM item_sku
+			WHERE item_id = #{item_id}
+	</select>
+	
+	<insert id="createSku" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO item_sku(item_id, name, price, img)
+			VALUES(#{item_id}, #{name}, #{price}, #{img})
+	</insert>
+	
+	<update id="updateSku">
+		UPDATE item_sku SET
+			name = #{name},
+			price = #{price},
+			img = #{img}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteSku">
+		DELETE FROM item_sku WHERE id = #{id}
+	</delete>
+	
 </mapper>

@@ -34,4 +34,7 @@ public interface OrderListMapper {
 			+ ",#{address_id},#{create_time}"
 			+ ",#{user_id},#{remarks})")
 	void insertNewOrderList(OrderList orderlist);
+	
+	@Update("update set order_status=#{order_status},reason=#{reason} where id=#{id}")
+	void updateTimeOutOrder(long id,String reason,int order_status);
 }

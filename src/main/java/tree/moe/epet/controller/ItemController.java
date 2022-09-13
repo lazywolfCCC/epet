@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tree.moe.epet.entity.Item;
+import tree.moe.epet.entity.ItemAdmin;
+import tree.moe.epet.entity.ItemAdminVo;
 import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.Shop;
 import tree.moe.epet.entity.ShopVO;
 import tree.moe.epet.exception.LackParameterException;
+import tree.moe.epet.exception.ObjectNoFoundException;
 import tree.moe.epet.exception.ParameterException;
 import tree.moe.epet.service.ItemCatService;
 import tree.moe.epet.service.ItemService;
@@ -228,6 +231,136 @@ public class ItemController {
 			result.setMsg(REACH_ITEM_BOTTOM.getMsg());
 		}
 		result.setData(list);
+		return result;
+	}
+	/*
+	 * Natuki Added Below
+	 * Natuki Added Below
+	 * Natuki Added Below
+	 * 
+	 */
+	@RequestMapping(value="/item/getItemListEx")
+	@ResponseBody
+	public Result getItemListEx(@RequestBody ItemAdminVo itemAdminVo) {
+		Integer page = itemAdminVo.getPage();
+		//System.out.println(page);
+		if(page == null || page.intValue() <= 0) {
+			page = 1;
+			itemAdminVo.setPage(page);
+		}
+		Integer limit = itemAdminVo.getLimit();
+		if(limit == null || limit.intValue() <= 0) {
+			limit = 20;
+			itemAdminVo.setLimit(limit);
+		}
+		int offset = (page - 1) * limit;
+		itemAdminVo.setOffset(offset);
+		List<ItemAdmin> list = itemService.getItemAdminList(itemAdminVo);
+		
+		Result<List<ItemAdmin>> result = new Result<>();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(list);
+		return result;
+	}
+	
+	@RequestMapping(value="/item/getItemByIdEx")
+	@ResponseBody
+	public Result getItemAdminById(@RequestBody ItemAdmin itemAdmin) throws Exception{
+		if(itemAdmin == null || itemAdmin.getId() == null || itemAdmin.getId().intValue() <= 0) {
+			throw new LackParameterException();
+		}
+		
+		ItemAdmin itemFound = itemService.getItemAdminById(itemAdmin.getId());
+		
+		Result<ItemAdmin> result = new Result<ItemAdmin>();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(itemFound);
+		return result;
+	}
+	
+	@RequestMapping(value="/item/updateItem")
+	@ResponseBody
+	public Result updateItem(@RequestBody ItemAdmin itemAdmin) throws Exception {
+		if(itemAdmin == null || itemAdmin.getId() == null || itemAdmin.getId().intValue() <= 0) {
+			throw new LackParameterException();
+		}
+		
+		ItemAdmin itemFound = itemService.getItemAdminById(itemAdmin.getId());
+		if(itemFound == null) {
+			throw new ObjectNoFoundException();
+		}
+		
+		boolean updateRes = itemService.updateItem(itemAdmin);
+		
+		Result<ItemAdmin> result = new Result<ItemAdmin>();
+		if(updateRes) {
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData(itemAdmin);
+		} else {
+			result.setCode(UPDATE_FAILED.getCode());
+			result.setMsg(UPDATE_FAILED.getMsg());
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/item/deleteItem")
+	@ResponseBody
+	public Result deleteItem(@RequestBody ItemAdmin itemAdmin) throws Exception {
+		if(itemAdmin == null || itemAdmin.getId() == null || itemAdmin.getId().intValue() <= 0) {
+			throw new LackParameterException();
+		}
+		
+		ItemAdmin itemFound = itemService.getItemAdminById(itemAdmin.getId());
+		if(itemFound == null) {
+			throw new ObjectNoFoundException();
+		}
+		
+		boolean deleteRes = itemService.deleteItem(itemAdmin.getId());
+		
+		Result<ItemAdmin> result = new Result<ItemAdmin>();
+		if(deleteRes) {
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+		} else {
+			result.setCode(DELETE_FAILED.getCode());
+			result.setMsg(DELETE_FAILED.getMsg());
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/item/createItem")
+	@ResponseBody
+	public Result createItem(@RequestBody ItemAdmin itemAdmin) throws Exception {
+		if(itemAdmin == null || itemAdmin.getShopId() == null || itemAdmin.getShopId().intValue() <= 0) {
+			throw new LackParameterException();
+		}
+		if(itemAdmin.getShopId() == null || itemAdmin.getShopId().intValue() <= 0) {
+			throw new LackParameterException();
+		}
+		if(itemAdmin.getName() == null) {
+			throw new LackParameterException();
+		}
+		
+		itemAdmin.setPrice(0.0);
+		itemAdmin.setSales(0);
+		
+		boolean createRes = itemService.createItem(itemAdmin);
+		
+		Result<ItemAdmin> result = new Result<ItemAdmin>();
+		if(createRes) {
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData(itemAdmin);
+		} else {
+			result.setCode(CREATE_FAILED.getCode());
+			result.setMsg(CREATE_FAILED.getMsg());
+		}
+		
 		return result;
 	}
 }

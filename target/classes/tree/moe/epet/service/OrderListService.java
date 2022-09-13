@@ -53,4 +53,9 @@ public class OrderListService {
 	{
 		return orderItemMapper.getOrderitemByOrderlistId(orderlistid);
 	}
+	
+	public void updateTimeoutOrder(long id,String reason,int order_status)
+	{
+		orderlistMapper.updateTimeOutOrder(id, reason, order_status);
+	}
 }

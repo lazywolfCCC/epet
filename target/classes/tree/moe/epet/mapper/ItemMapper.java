@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.*;
 
 import tree.moe.epet.entity.Item;
+import tree.moe.epet.entity.ItemAdmin;
+import tree.moe.epet.entity.ItemAdminVo;
 import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
 import tree.moe.epet.entity.Shop;
@@ -40,4 +42,24 @@ public interface ItemMapper {
 	
 	//@Select("Select * from item where name like #{keywords} order by #{orderkey} limit #{left},#{right}")
 	List<Item> searchItem(String keywords , int left , int right ,String orderkey ,String sequence,long cat_id);
+	/*
+	 * Natuki Added Below
+	 * Natuki Added Below
+	 * Natuki Added Below
+	 * 
+	 */
+	
+	public List<ItemAdmin> getItemAdminList(ItemAdminVo itemAdminVo);
+	
+	public ItemAdmin getItemAdminById(@Param("id") Long id);
+	
+	public int updateItem(ItemAdmin itemAdmin);
+	
+	public int deleteItem(@Param("id") Long id);
+	
+	public int updateItemSales(ItemAdmin itemAdmin);
+	
+	public int updateItemPrice(ItemAdmin itemAdmin);
+	
+	public int createItem(ItemAdmin itemAdmin);
 }

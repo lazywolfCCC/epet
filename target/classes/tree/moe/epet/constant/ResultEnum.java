@@ -35,7 +35,10 @@ public enum ResultEnum {
 	PARAMS_INCORRECT(6001, "参数不正确"),
 	UNKNOWN_ERROR(5200, "服务器错误"),
 	REACH_ITEM_BOTTOM(5302,"没有更多了"),
-	NO_PERMISION(5303,"没有访问权限");
+	NO_PERMISION(5303,"没有访问权限"),
+	UPDATE_FAILED(5304, "更新失败"),
+	DELETE_FAILED(5305, "删除失败"),
+	CREATE_FAILED(5306, "创建失败");
 	
 	private int code;
 	private String msg;
