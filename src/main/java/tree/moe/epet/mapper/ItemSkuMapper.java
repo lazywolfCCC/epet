@@ -16,4 +16,5 @@ public interface ItemSkuMapper {
 	Item_sku getItemSkuById(Item_sku sku);
 	
 	Item_sku getItemsku(long id);
+	
 }

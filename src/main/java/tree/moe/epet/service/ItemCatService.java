@@ -24,4 +24,24 @@ public class ItemCatService {
 	{
 		return catMapper.getItemCatById(catid);
 	}
+	
+	public List<Item_cat> getAllItemCat(int left , int right)
+	{
+		return catMapper.getAllItemCat(left, right);
+	}
+	
+	public void deleteItemCatById(long id)
+	{
+		catMapper.deleteItemCatById(id);
+	}
+	
+	public Item_cat getCatById(long id)
+	{
+		return catMapper.getCatById(id);
+	}
+	
+	public void updateItemCat(Item_cat itemcat)
+	{
+		catMapper.updateItemCatById(itemcat);
+	}
 }

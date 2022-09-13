@@ -11,6 +11,7 @@ tree\moe\epet\constant\ResultEnum.class
 tree\moe\epet\service\ShopService.class
 tree\moe\epet\entity\Item_cat.class
 tree\moe\epet\entity\Item_sku.class
+tree\moe\epet\exception\AuthorityException.class
 tree\moe\epet\mapper\VideoCommentMapper.class
 tree\moe\epet\entity\Video.class
 tree\moe\epet\entity\Shop.class
@@ -25,6 +26,7 @@ tree\moe\epet\entity\Collection.class
 tree\moe\epet\entity\Result.class
 tree\moe\epet\controller\ShopController$1.class
 tree\moe\epet\entity\User.class
+tree\moe\epet\mapper\OrderItemMapper.class
 tree\moe\epet\Application.class
 tree\moe\epet\config\ServiceExceptionHandler.class
 tree\moe\epet\service\CollectionService.class
