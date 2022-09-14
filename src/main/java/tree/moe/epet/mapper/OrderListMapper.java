@@ -33,6 +33,7 @@ public interface OrderListMapper {
 			+ ",#{order_amount_total},#{logistics_fee}"
 			+ ",#{address_id},#{create_time}"
 			+ ",#{user_id},#{remarks})")
+	@Options(useGeneratedKeys=true , keyProperty="id" , keyColumn="id")
 	void insertNewOrderList(OrderList orderlist);
 	
 	@Update("update set order_status=#{order_status},reason=#{reason} where id=#{id}")

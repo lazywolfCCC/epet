@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tree.moe.epet.entity.*;
 import tree.moe.epet.exception.*;
+import tree.moe.epet.service.ItemSkuService;
 import tree.moe.epet.service.OrderListService;
 import tree.moe.epet.service.UserService;
 import tree.moe.epet.util.JwtUtil;
@@ -31,6 +32,9 @@ public class OrderListController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	ItemSkuService itemSkuService;
 	
 	public static int count = 20;
 	
@@ -181,10 +185,11 @@ public class OrderListController {
 	
 	@RequestMapping(value="/orderlist/insertNewOrderList")
 	@ResponseBody
-	public Result insertNewOrderList(HttpServletRequest request,@RequestBody OrderList orderlist)throws Exception
+	public Result insertNewOrderList(HttpServletRequest request,@RequestBody OrderVO orderVO)throws Exception
 	{
 		Result result = new Result();
 		String token = request.getHeader("token");
+		int createCount = 0 ;
 		Map<String, Object> info = JwtUtil.getInfo(token);
 		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
 		{
@@ -194,10 +199,48 @@ public class OrderListController {
 		{
 			throw new TokenException();
 		}
-		orderlist.setCreate_time(new Date());
-		orderlistService.insertNewOrderList(orderlist);
-		result.setCode(REQUEST_SUCCESS.getCode());
-		result.setMsg(REQUEST_SUCCESS.getMsg());
+		orderVO.getOrderlist().setCreate_time(new Date());
+		orderVO.getOrderlist().setProduct_count(orderVO.getOrderItemList().size());
+		
+		double product_amount_total = 0;
+		double logistics_fee = 0;
+		for(int k = 0 ; k < orderVO.getOrderItemList().size();k++)
+		{
+			int num = 0 ;
+			double product_price;
+			Item_sku temp = itemSkuService.getItemSkuById
+					(orderVO.getOrderItemList().get(k).getSku_id());
+			num = orderVO.getOrderItemList().get(k).getNumber();
+			product_price = temp.getPrice()* num;
+			product_amount_total += product_price;
+			logistics_fee+=temp.getItem().getFreight();
+			orderVO.getOrderItemList().get(k).setProduct_price(product_price);
+			orderVO.getOrderItemList().get(k).setItem_id(temp.getItem_id());
+			orderVO.getOrderItemList().get(k).setProduct_name(temp.getItem().getName());
+			orderVO.getOrderItemList().get(k).setSku_name(temp.getName());
+		}
+		for(int j = 0 ; j < orderVO.getOrderItemList().size();j++)
+		{
+			orderVO.getOrderlist().setProduct_amount_total(product_amount_total);
+			orderVO.getOrderlist().setOrder_amount_total(product_amount_total);
+			orderVO.getOrderlist().setLogistics_fee(logistics_fee);
+		}
+		orderlistService.insertNewOrderList(orderVO.getOrderlist());
+		for(int i = 0 ; i < orderVO.getOrderItemList().size();i++)
+		{
+			orderVO.getOrderItemList().get(i).setOrderlist_id(orderVO.getOrderlist().getId());
+			createCount += orderlistService.createNewOrderItem(orderVO.getOrderItemList().get(i));
+		}
+		if(createCount == orderVO.getOrderItemList().size())
+		{
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+		}
+		else
+		{
+			result.setCode(CREATE_FAILED.getCode());
+			result.setMsg(CREATE_FAILED.getMsg());
+		}
 		return result;
 	}
 	
@@ -235,45 +278,3 @@ public class OrderListController {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
