@@ -44,4 +44,9 @@ public class ItemCatService {
 	{
 		catMapper.updateItemCatById(itemcat);
 	}
+	
+	public int getPageCount()
+	{
+		return catMapper.getPageCount();
+	}
 }

@@ -50,6 +50,11 @@ public class ItemService {
 		return itemMapper.getItemByPageWithCatid(page,cat_id,left,right);
 	}
 	
+	public Integer getPageCount()
+	{
+		return itemMapper.getPageCount();
+	}
+	
 	/*public List<Item> searchItem(String keywords , int left , int right)
 	{
 		return itemMapper.searchItem(keywords,left,right);

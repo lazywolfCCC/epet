@@ -100,4 +100,15 @@ public class ItemCatController {
 		catService.updateItemCat(itemcat);
 		return result;
 	}
+	
+	@RequestMapping(value="/cat/getPageCount")
+	@ResponseBody
+	public Result<Integer> getPageCount()
+	{
+		Result<Integer> result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(catService.getPageCount());
+		return result;
+	}
 }

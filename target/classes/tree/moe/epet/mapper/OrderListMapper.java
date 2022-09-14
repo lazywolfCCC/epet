@@ -37,4 +37,7 @@ public interface OrderListMapper {
 	
 	@Update("update set order_status=#{order_status},reason=#{reason} where id=#{id}")
 	void updateTimeOutOrder(long id,String reason,int order_status);
+
+	@Select("select count(id) from orderlist")
+	Integer getPageCount();
 }

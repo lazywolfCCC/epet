@@ -58,4 +58,9 @@ public class OrderListService {
 	{
 		orderlistMapper.updateTimeOutOrder(id, reason, order_status);
 	}
+	
+	public Integer getPageCount()
+	{
+		return orderlistMapper.getPageCount();
+	}
 }

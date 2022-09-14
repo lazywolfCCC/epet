@@ -34,4 +34,6 @@ public interface ItemSkuMapper {
 	
 	public int deleteSku(Item_sku sku);
 	
+	
+	
 }

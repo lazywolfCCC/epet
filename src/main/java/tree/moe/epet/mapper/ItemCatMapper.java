@@ -29,4 +29,7 @@ public interface ItemCatMapper {
 			+ ",img=#{img},parent_id=#{parent_id},"
 			+ "priority=#{priority} where id =#{id}")
 	void updateItemCatById(Item_cat itemcat);
+	
+	@Select("Select count(id) from item_cat")
+	int getPageCount();
 }

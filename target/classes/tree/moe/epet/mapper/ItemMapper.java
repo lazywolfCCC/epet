@@ -40,6 +40,9 @@ public interface ItemMapper {
 	/*@Select("Select * from item where name like #{keywords} limit #{left},#{right}")
 	List<Item> searchItem(String keywords , int left , int right);*/
 	
+	@Select("Select count(id) from item")
+	Integer getPageCount();
+	
 	//@Select("Select * from item where name like #{keywords} order by #{orderkey} limit #{left},#{right}")
 	List<Item> searchItem(String keywords , int left , int right ,String orderkey ,String sequence,long cat_id);
 	/*
@@ -62,4 +65,6 @@ public interface ItemMapper {
 	public int updateItemPrice(ItemAdmin itemAdmin);
 	
 	public int createItem(ItemAdmin itemAdmin);
+	
+	
 }

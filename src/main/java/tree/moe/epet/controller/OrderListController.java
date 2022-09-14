@@ -222,6 +222,17 @@ public class OrderListController {
 		result.setData(list);
 		return result;
 	}
+	
+	@RequestMapping(value="/orderlist/getPageCount")
+	@ResponseBody
+	public Result getPageCount()
+	{
+		Result<Integer> result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(orderlistService.getPageCount());
+		return result;
+	}
 }
 
 

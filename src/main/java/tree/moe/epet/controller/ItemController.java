@@ -233,6 +233,17 @@ public class ItemController {
 		result.setData(list);
 		return result;
 	}
+	
+	@RequestMapping(value="/item/getPageCount")
+	@ResponseBody
+	public Result getPageCount()
+	{
+		Result<Integer> result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(itemService.getPageCount());
+		return result;
+	}
 	/*
 	 * Natuki Added Below
 	 * Natuki Added Below
