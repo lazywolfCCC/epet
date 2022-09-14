@@ -63,4 +63,9 @@ public class OrderListService {
 	{
 		return orderlistMapper.getPageCount();
 	}
+	
+	public int createNewOrderItem(Order_item order_item)
+	{
+		return orderItemMapper.createNewOrderItem(order_item);
+	}
 }
