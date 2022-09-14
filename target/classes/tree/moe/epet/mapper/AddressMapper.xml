@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="tree.moe.epet.mapper.AddressMapper">
-	<insert id="insertAddress" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-		INSERT INTO address(user_id, name, tel, province, city, county, area_code, address_detail, postal_code)
-			VALUES (#{user_id}, #{name}, #{tel}, #{province}, #{city}, #{county}, #{area_code}, #{address_detail}, #{postal_code})
-	</insert>
-</mapper>
