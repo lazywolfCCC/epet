@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Video;
 import tree.moe.epet.exception.LackParameterException;
 import tree.moe.epet.service.VideoService;
@@ -37,5 +38,57 @@ public class VideoController {
 		}
 		return videoService.getVideoById(video.getId());
 	}
+	/*wujie added below*/
+	/*wujie added below*/
+	/*wujie added below*/
+	@RequestMapping(value="/video/getVideosCount")
+	@ResponseBody
+	public int getVideosCount()
+	{
+		return videoService.getVideosCount();
+	}
 	
+	@RequestMapping(value="/video/getVideosByPaging")
+	@ResponseBody
+	public List<Video> getVideosByPaging(@RequestBody ItemVO vo)throws Exception
+	{
+		int count = 3;
+		if(vo.getPage()<=0)
+		{
+			vo.setPage(1);
+		}
+		return videoService.getVideosByPaging(count,vo.getPage()-1);
+	}
+	
+	@RequestMapping(value="/video/searchVideos")
+	@ResponseBody
+	public List<Video> searchVideosByTitle(@RequestBody Video video) throws Exception
+	{
+		if(video.getTitle() == null)
+		{
+			throw new LackParameterException();
+		}
+		return videoService.searchVideoByTitle(video);
+	}
+	
+	@RequestMapping(value="/video/insertVideo")
+	@ResponseBody
+	public int insertVideo(@RequestBody Video video) throws Exception
+	{
+		return videoService.insertVideo(video);
+	}
+
+	@RequestMapping(value="/video/updateVideo")
+	@ResponseBody
+	public int updateVideo(@RequestBody Video video) throws Exception
+	{
+		return videoService.updateVideo(video);
+	}
+	
+	@RequestMapping(value="/video/deleteVideo")
+	@ResponseBody
+	public int deleteVideo(@RequestBody Video video) throws Exception
+	{
+		return videoService.deleteVideo(video);
+	}
 }

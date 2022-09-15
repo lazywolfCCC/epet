@@ -15,6 +15,7 @@ import tree.moe.epet.entity.ItemAdmin;
 import tree.moe.epet.entity.ItemAdminVo;
 import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Item_cat;
+import tree.moe.epet.entity.OrderVO;
 import tree.moe.epet.entity.Result;
 import tree.moe.epet.entity.Shop;
 import tree.moe.epet.entity.ShopVO;
@@ -118,15 +119,19 @@ public class ItemController {
 		return result;
 	}
 	
-	/*@RequestMapping(value="/item/search")
+	@RequestMapping(value="/item/search")
 	@ResponseBody
 	public Result searchItem(@RequestBody ItemVO keywords) throws Exception 
 	{
-		if(keywords.getKeywords().isEmpty())
+		/*if(keywords.getKeywords().isEmpty())
 		{
 			throw new LackParameterException();
+		}*/
+		if(keywords.getPage() <=0)
+		{
+			keywords.setPage(1);
 		}
-		int count = 20;
+		int count = 6;
 		int left = count*(keywords.getPage()-1);
 		int right = count;
 		Result<List<Item>> result = new Result();
@@ -145,7 +150,20 @@ public class ItemController {
 		}
 		result.setData(list);
 		return result;
-	}*/
+	}
+	
+	@RequestMapping(value="/item/getPageCountByKeywords")
+	@ResponseBody
+	public Result getPageCountByKeywords(@RequestBody ItemVO info) throws Exception
+	{
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(itemService.getPageCountByKeyWords("%"+info.getKeywords()+"%"));
+		return result;
+	}
+	
+	
 	
 	@RequestMapping(value="/item/getOrderedItems")
 	@ResponseBody
@@ -160,6 +178,14 @@ public class ItemController {
 		if(info.getPage()<=0)
 		{
 			info.setPage(1);
+		}
+		if(info.getOrderedKey()==null || info.getOrderedKey().length() <=0)
+		{
+			info.setOrderedKey("id");
+		}
+		if(info.getSequence()==null || info.getSequence().length()<=0)
+		{
+			info.setSequence("desc");
 		}
 		int left = count*(info.getPage()-1);
 		int right = count;
@@ -340,7 +366,6 @@ public class ItemController {
 			result.setCode(DELETE_FAILED.getCode());
 			result.setMsg(DELETE_FAILED.getMsg());
 		}
-		
 		return result;
 	}
 	

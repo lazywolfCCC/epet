@@ -22,4 +22,34 @@ public class ShopService {
 	public List<Shop> getShops(){
 		return shopMapper.getShops();
 	};
+	
+	/*wujie Added below */
+	/*wujie Added below */
+	/*wujie Added below */
+	
+	
+	
+	public int deleteShop(Shop shop)
+	{
+		return shopMapper.deleteShopByid(shop);
+	}
+	public int updateShop(Shop shop)
+	{
+		return shopMapper.UpdateShop(shop);
+	}
+	public int insertShop(Shop shop)
+	{
+		return shopMapper.InsertShop(shop);
+	}
+	public int getShopsCount()
+	{
+		return shopMapper.getShopsCount();
+	}
+	public List<Shop> searchShops(Shop shop)
+	{
+		return shopMapper.getShopsByname(shop);
+	}
+	public List<Shop> getShopsByPaging(int right,int page){
+		return shopMapper.getShopsByPaging(right,page);
+	};
 }

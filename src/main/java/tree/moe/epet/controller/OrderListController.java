@@ -235,12 +235,14 @@ public class OrderListController {
 		{
 			result.setCode(REQUEST_SUCCESS.getCode());
 			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData(orderVO.getOrderlist().getId());
 		}
 		else
 		{
 			result.setCode(CREATE_FAILED.getCode());
 			result.setMsg(CREATE_FAILED.getMsg());
 		}
+		
 		return result;
 	}
 	

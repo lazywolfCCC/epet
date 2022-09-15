@@ -8,6 +8,7 @@ public class ItemVO {
 	private String keywords;
 	private String orderedKey;
 	private String sequence;
+
 	
 	
 	public int getPage() {
@@ -78,6 +79,8 @@ public class ItemVO {
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
 	}
+
+
 
 
 	@Override

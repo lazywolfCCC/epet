@@ -55,6 +55,11 @@ public class ItemService {
 		return itemMapper.getPageCount();
 	}
 	
+	public Integer getPageCountByKeyWords(String keywords)
+	{
+		return itemMapper.getPageCountByKeywords(keywords);
+	}
+	
 	/*public List<Item> searchItem(String keywords , int left , int right)
 	{
 		return itemMapper.searchItem(keywords,left,right);
@@ -63,6 +68,11 @@ public class ItemService {
 	public List<Item> searchItem(String keywords , int left , int right ,String orderkey ,String sequence,long cat_id)
 	{
 		return itemMapper.searchItem(keywords,left,right,orderkey,sequence,cat_id);
+	}
+	
+	public List<Item> searchItem(String keywords , int left , int right )
+	{
+		return itemMapper.searchItem(keywords, left, right, "", "", 0);
 	}
 	
 	/*

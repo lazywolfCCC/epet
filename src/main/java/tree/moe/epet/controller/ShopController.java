@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tree.moe.epet.entity.ItemVO;
 import tree.moe.epet.entity.Position;
 import tree.moe.epet.entity.Shop;
 import tree.moe.epet.exception.LackParameterException;
@@ -59,9 +60,7 @@ public class ShopController {
 			public int compare(Object o1, Object o2) {
 				return  (int)(((Shop)o1).getDistance() - ((Shop)o2).getDistance());
 			}
-			
 		});
-		
 		return list;
 	}
 	
@@ -71,4 +70,77 @@ public class ShopController {
 		 
         return geoCurve.getEllipsoidalDistance();
 	}
+	
+	/*wujie added below*/
+	/*wujie added below*/
+	/*wujie added below*/
+	@RequestMapping(value="/shop/getAllShops")
+	@ResponseBody
+	public List<Shop> getAllShops(@RequestBody Shop shop)throws Exception
+	{
+		return shopService.getShops();
+	}
+	
+	@RequestMapping(value="/shop/getShopsCount")
+	@ResponseBody
+	public int getShopsCount()
+	{
+		return shopService.getShopsCount();
+	}
+	
+	@RequestMapping(value="/shop/getShopsByPaging")
+	@ResponseBody
+	public List<Shop> getShopsByPaging(@RequestBody ItemVO vo)throws Exception
+	{
+		int count = 3;
+		if(vo.getPage()<=0)
+		{
+			vo.setPage(1);
+		}
+		return shopService.getShopsByPaging(count,vo.getPage()-1);
+	}
+	
+	@RequestMapping(value="/shop/deleteShopById")
+	@ResponseBody
+	public int deleteShop(@RequestBody Shop shop)throws Exception
+	{
+		if(shop.getId()==0)
+		{
+			throw new LackParameterException();
+		}
+			 return shopService.deleteShop(shop);
+	}
+	
+	@RequestMapping(value="/shop/updateShop")
+	@ResponseBody
+	public int UpdateShop(@RequestBody Shop shop)throws Exception
+	{
+		if(shop.getId()==0)
+		{
+			throw new LackParameterException();
+		}
+			 return shopService.updateShop(shop);
+	}
+	  
+	@RequestMapping(value="/shop/insertShop")
+	@ResponseBody
+	public int insertShop(@RequestBody Shop shop)throws Exception
+	{		
+			 return shopService.insertShop(shop);
+	}
+	
+	@RequestMapping(value="/shop/searchShops")
+	@ResponseBody
+	public List<Shop> getShopsByname(@RequestBody Shop shop)throws Exception
+	{
+	
+		
+		if(shop.getName() == null)
+		{
+			throw new LackParameterException();
+		}
+			
+			 return shopService.searchShops(shop);
+	}
+	
 }
