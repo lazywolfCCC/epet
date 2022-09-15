@@ -1,5 +1,7 @@
 package tree.moe.epet.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,30 @@ public class UserService {
 	public User getUserWithOutPasswordById(long id)
 	{
 		return usermapper.getUserById(id);
+	}
+	
+	/*yifan added below*/
+	/*yifan added below*/
+	/*yifan added below*/
+	public List<User> getUserByUsername1(String username)  //通过账号检索
+	{
+		List<User> user;
+		user = usermapper.getUserByUsername1(username);
+		return user;
+	}
+	
+	public void addNewUser(User user)
+	{
+		usermapper.addNewUser(user);
+	}
+	
+	//查询所有
+	public List<User> findAll(){  
+		return usermapper.findAll();
+	}
+		
+	//删除数据
+	public Integer delete(long id) {
+		return usermapper.delete(id);
 	}
 }

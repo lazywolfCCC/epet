@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import tree.moe.epet.entity.User;
 import tree.moe.epet.entity.UserVO;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.*;
 
 @Mapper
@@ -31,6 +33,25 @@ public interface UserMapper {
 	
 	@Select("SELECT id,username,nickname,telephone,sex,signature,is_enabled,default_address FROM user WHERE id=#{id}")
 	User getUserWithOutPasswordById(long id);
+	
+	/*yifan added below*/
+	/*yifan added below*/
+	/*yifan added below*/
+	
+	@Select("Select * from user where username like #{username}")
+	List<User> getUserByUsername1(String username);//通过username查询数据
+	
+	@Insert("insert into user (username,password,nickname,role,sex,telephone,is_enabled,default_address,signature)"
+			+ "values(#{username},#{password},#{nickname},#{role},#{sex},#{telephone},#{is_enabled},#{default_address},#{signature})")
+	void addNewUser(User user);
+	
+	 //查询全部
+	@Select("select * from user")
+	List<User> findAll(); 
+	
+	//删除数据
+	@Delete("delete from user where id=#{id}")
+	public Integer delete(long id); 
 	
 }
 
