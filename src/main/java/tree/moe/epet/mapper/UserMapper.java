@@ -24,6 +24,15 @@ public interface UserMapper {
 			+ "default_address=#{default_address} where id=#{id}")
 	void updateUserinfo(User user);//updateUserinfo
 	
+	@Update("update user set "
+			+ "nickname=#{nickname},telephone=#{telephone},sex=#{sex},"
+			+ "role=#{role},is_enabled=#{is_enabled}"
+			+ " where id=#{id}")
+	void updateUserinfoByAdmin(User user);
+	
+	@Select("Select count(id) from user ")
+	int getPageTotal();
+	
 	@Insert("insert into user (username,password,nickname)"
 			+ "values(#{username},#{password},#{nickname})")
 	void registerNewUser(User user);

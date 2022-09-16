@@ -103,6 +103,13 @@ public class UserController {
 		return result;
 	}
 	
+	@RequestMapping(value="/user/getTotal")   //修改用户信息
+	@ResponseBody
+	public int updateUser()
+	{
+		return userService.getPageTotal();
+	}
+	
 	/*yifan added below*/
 	/*yifan added below*/
 	/*yifan added below*/
@@ -111,7 +118,8 @@ public class UserController {
 	@ResponseBody
 	public User updateUser(HttpServletRequest request,@RequestBody User userdata)
 	{
-		userService.updateUserinfo(userdata);
+		userdata.setPassword(DigestUtils.md5DigestAsHex(userdata.getPassword().getBytes()));
+		userService.updateUserByAdmin(userdata);
 		User user1 = new User();
 		user1.setUsername(userdata.getUsername());
 		return userService.getUserByUsername(user1.getUsername());
@@ -159,7 +167,7 @@ public class UserController {
 		{
 			throw new ParameterException();
 		}
-		user1.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
 		if(userService.getUserByUsername(user1.getUsername())!=null)
 		{
 			throw new UserExistException();

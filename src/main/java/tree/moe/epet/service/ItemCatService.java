@@ -45,6 +45,11 @@ public class ItemCatService {
 		catMapper.updateItemCatById(itemcat);
 	}
 	
+	public int createNewCat(Item_cat item_cat)
+	{
+		return catMapper.createNewCat(item_cat);
+	}
+	
 	public int getPageCount()
 	{
 		return catMapper.getPageCount();

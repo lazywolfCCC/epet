@@ -30,6 +30,11 @@ public interface ItemCatMapper {
 			+ "priority=#{priority} where id =#{id}")
 	void updateItemCatById(Item_cat itemcat);
 	
-	@Select("Select count(id) from item_cat")
+	@Select("Select count(id) from item_cat ")
 	int getPageCount();
+	
+	@Insert("Insert into item_cat (name,flag,parent_id,img,priority) "
+			+ "values(#{name},#{flag},#{parent_id},#{img},#{priority})")
+	@Options(useGeneratedKeys=true , keyProperty="id" , keyColumn="id")
+	int createNewCat(Item_cat item_cat);
 }

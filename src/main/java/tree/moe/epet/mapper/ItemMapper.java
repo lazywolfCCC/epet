@@ -43,7 +43,7 @@ public interface ItemMapper {
 	@Select("Select count(id) from item")
 	Integer getPageCount();
 	
-	@Select("Select count(id) from item where name like #{keywords} or subtitle like #{keywords}")
+	@Select("Select count(id) from item where name like #{keywords} ")
 	Integer getPageCountByKeywords(String keywords);
 	
 	//@Select("Select * from item where name like #{keywords} order by #{orderkey} limit #{left},#{right}")

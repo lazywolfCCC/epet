@@ -28,6 +28,11 @@ public class UserService {
 		usermapper.updateUserinfo(user);
 	}
 	
+	public void updateUserByAdmin(User user)
+	{
+		usermapper.updateUserinfoByAdmin(user);
+	}
+	
 	public void registrtNewUser(User user)
 	{
 		usermapper.registerNewUser(user);
@@ -41,6 +46,11 @@ public class UserService {
 	public User getUserWithOutPasswordById(long id)
 	{
 		return usermapper.getUserById(id);
+	}
+	
+	public int getPageTotal()
+	{
+		return usermapper.getPageTotal();
 	}
 	
 	/*yifan added below*/

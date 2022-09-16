@@ -11,9 +11,16 @@ import tree.moe.epet.entity.Order_item;
 import tree.moe.epet.entity.OrderlistVO;
 import tree.moe.epet.mapper.OrderItemMapper;
 import tree.moe.epet.mapper.OrderListMapper;
+import tree.moe.epet.rabbitmq.CancelOrderSender;
 
 @Service
 public class OrderListService {
+	public static final Long DELAY_ORDER_CANCEL_TIME = 60000L;
+	
+	@Autowired
+    private CancelOrderSender cancelOrderSender;
+	
+	
 	@Autowired
 	OrderListMapper orderlistMapper;
 	
@@ -47,6 +54,9 @@ public class OrderListService {
 	public void insertNewOrderList(OrderList orderlist)
 	{
 		orderlistMapper.insertNewOrderList(orderlist);
+		if(orderlist.getId() > 0) {
+			sendDelayMessageCancelOrder(orderlist.getId());
+		}
 	}
 	
 	public List<Order_item> getOrderItemsByOrderlistid(long orderlistid)
@@ -68,4 +78,8 @@ public class OrderListService {
 	{
 		return orderItemMapper.createNewOrderItem(order_item);
 	}
+	private void sendDelayMessageCancelOrder(Long orderId) {
+        //发送延迟消息
+        cancelOrderSender.sendMessage(orderId, DELAY_ORDER_CANCEL_TIME);
+    }
 }

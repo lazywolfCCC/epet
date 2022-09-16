@@ -19,4 +19,6 @@ public interface OrderItemMapper {
 			+ "#{sku_name},#{discount_rate},#{discount_amount},#{number},#{subtotal},#{remark}) ")
 	@Options(useGeneratedKeys=true , keyProperty="id" , keyColumn="id")
 	int createNewOrderItem(Order_item order_item);
+	
+	
 }

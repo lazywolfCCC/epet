@@ -40,7 +40,7 @@
 			FROM item LEFT JOIN shop ON item.shop_id = shop.id
 				WHERE 1 = 1
 			<if test="keyword != null">
-				AND item.name LIKE '%${keyword}%' AND item.subtitle like '%${keyword}%'
+				AND (item.name LIKE '%${keyword}%' OR item.subtitle like '%${keyword}%')
 			</if>
 			<if test ="catId != null">
 				AND item.cat_id = #{catId}
@@ -84,6 +84,7 @@
 			freight = #{freight},
 			cover_img = #{coverImg},
 			shop_id = #{shopId}
+			price = #{price}
 		WHERE
 			id = #{id}
 	</update>

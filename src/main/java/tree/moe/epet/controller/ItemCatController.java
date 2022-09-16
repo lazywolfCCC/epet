@@ -1,5 +1,6 @@
 package tree.moe.epet.controller;
 
+import static tree.moe.epet.constant.ResultEnum.CREATE_FAILED;
 import static tree.moe.epet.constant.ResultEnum.REQUEST_SUCCESS;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import tree.moe.epet.service.ItemCatService;
 @RestController
 @CrossOrigin
 public class ItemCatController {
-	public static int count = 20;
+	public static int count = 6;
 	@Autowired
 	ItemCatService catService;
 	
@@ -98,6 +99,32 @@ public class ItemCatController {
 		result.setCode(REQUEST_SUCCESS.getCode());
 		result.setMsg(REQUEST_SUCCESS.getMsg());
 		catService.updateItemCat(itemcat);
+		return result;
+	}
+	
+	@RequestMapping(value="/cat/createItemCat")
+	@ResponseBody
+	public Result createNewCat(HttpServletRequest request,@RequestBody Item_cat itemcat)throws Exception
+	{
+		Result<Item_cat> result = new Result();
+		String token = request.getHeader("token");
+		System.out.println(itemcat);
+		if(token == "")
+		{
+			throw new TokenException();
+		}
+		int createRes = catService.createNewCat(itemcat);
+		if(createRes >0)
+		{
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+			result.setData(itemcat);
+		}
+		else
+		{
+			result.setCode(CREATE_FAILED.getCode());
+			result.setMsg(CREATE_FAILED.getMsg());
+		}
 		return result;
 	}
 	
