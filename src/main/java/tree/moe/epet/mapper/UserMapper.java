@@ -26,9 +26,14 @@ public interface UserMapper {
 	
 	@Update("update user set "
 			+ "nickname=#{nickname},telephone=#{telephone},sex=#{sex},"
-			+ "role=#{role},is_enabled=#{is_enabled}"
+			+ "role=#{role},is_enabled=#{is_enabled},money=#{money}"
 			+ " where id=#{id}")
 	void updateUserinfoByAdmin(User user);
+	
+	@Update("update user set "
+			+ "money=#{money}"
+			+ " where id=#{id}")
+	void updateUserMoneyByAdmin(User user);
 	
 	@Select("Select count(id) from user ")
 	int getPageTotal();
@@ -40,7 +45,7 @@ public interface UserMapper {
 	@Update("update user set default_address=#{address_id} where id=#{user_id}")
 	void changeDefaultAddress(long address_id , long user_id);
 	
-	@Select("SELECT id,username,nickname,telephone,sex,signature,is_enabled,default_address FROM user WHERE id=#{id}")
+	@Select("SELECT id,username,nickname,telephone,sex,signature,is_enabled,default_address,money FROM user WHERE id=#{id}")
 	User getUserWithOutPasswordById(long id);
 	
 	/*yifan added below*/

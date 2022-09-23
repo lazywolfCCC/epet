@@ -24,6 +24,11 @@ public class ItemService {
 		return itemlist;
 	}
 	
+	public List<Item> getItemOnlyCat()
+	{
+		return itemMapper.getItemOnlyCat();
+	}
+	
 	public List<Item> getItemsByCategory(Item_cat cat)
 	{
 		List<Item> itemlist = itemMapper.getItemsByCategory(cat);
@@ -55,6 +60,11 @@ public class ItemService {
 		return itemMapper.getPageCount();
 	}
 	
+	public Integer getPageCountByCol(ItemAdminVo itemAdminvo)
+	{
+		return itemMapper.getPageCountByCol(itemAdminvo);
+	}
+	
 	public Integer getPageCountByKeyWords(String keywords)
 	{
 		return itemMapper.getPageCountByKeywords(keywords);
@@ -64,6 +74,11 @@ public class ItemService {
 	{
 		return itemMapper.searchItem(keywords,left,right);
 	}*/
+	
+	public List<ItemAdmin> getItemAdminByShopId(long shopId,int left , int right)
+	{
+		return itemMapper.getItemAdminByShopId(shopId, left, right);
+	}
 	
 	public List<Item> searchItem(String keywords , int left , int right ,String orderkey ,String sequence,long cat_id)
 	{

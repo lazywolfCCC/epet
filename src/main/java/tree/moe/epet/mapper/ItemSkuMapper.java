@@ -18,6 +18,7 @@ public interface ItemSkuMapper {
 	
 	Item_sku getItemsku(long id);
 	
+	
 	/*
 	 * Natuki Added Below
 	 * Natuki Added Below

@@ -12,6 +12,10 @@ public class OrderlistVO {
 	private Date delivery_time;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date order_settlement_time;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+	private Date receiving_time;
+	private int limit;
+	
 	private long address_id;
 	private long user_id;
 	private long id;
@@ -78,5 +82,18 @@ public class OrderlistVO {
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
 	}
+	public Date getReceiving_time() {
+		return receiving_time;
+	}
+	public void setReceiving_time(Date receiving_time) {
+		this.receiving_time = receiving_time;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	
 	
 }

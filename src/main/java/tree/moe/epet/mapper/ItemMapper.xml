@@ -56,6 +56,22 @@
 			</if>
 	</select>
 	
+	<select id="getItemAdminByShopId" resultMap="ItemAdmin">
+		SELECT item.id AS item_id, item.shop_id AS shop_id, item.name, item.flag, item.subtitle, item.cat_id, item.freight, item.sales, item.cover_img, item.price, shop.name AS shop_name
+			FROM item LEFT JOIN shop ON item.shop_id = shop.id
+				WHERE item.shop_id = #{shopId} limit #{left},#{right}
+	</select>
+	
+	<select id="getPageCountByCol" resultType="java.lang.Integer">
+		select count(id) from item where 1=1
+		<if test="catId!=0 and catId!=null">
+			And cat_id = #{catId}
+		</if>
+		<if test="shopId!=0 and shopId!=null">
+			And shop_id = #{shopId}
+		</if>
+	</select>
+	
 	<!-- Natuki Added Below -->
 	<!-- Natuki Added Below -->
 	<!-- Natuki Added Below -->
@@ -65,6 +81,8 @@
 			FROM item LEFT JOIN shop ON item.shop_id = shop.id
 				WHERE item.id = #{id}
 	</select>
+	
+	
 	
 	<resultMap id="ItemAdmin" type="tree.moe.epet.entity.ItemAdmin">
 		<id column="item_id" property="id"></id>

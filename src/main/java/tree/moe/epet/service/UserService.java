@@ -38,6 +38,11 @@ public class UserService {
 		usermapper.registerNewUser(user);
 	}
 	
+	public void updateUserMoneyByAdmin(User user)
+	{
+		usermapper.updateUserMoneyByAdmin(user);
+	}
+	
 	public void changeDefaultAddress(long address_id , long user_id)
 	{
 		usermapper.changeDefaultAddress(address_id, user_id);

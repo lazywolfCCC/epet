@@ -11,7 +11,7 @@ import tree.moe.epet.entity.OrderlistVO;
 @Mapper
 public interface OrderListMapper {
 	
-	@Select("SELECT * FROM orderlist where user_id=#{user_id} limit #{left},#{right}")
+	@Select("SELECT * FROM orderlist where user_id=#{user_id} order by `id` desc limit #{left},#{right}" )
 	List<OrderList> getOrderlistByUserid(long user_id,int left , int right);
 	
 	List<OrderList> getAllOrderlists(int left,int right,String orderkey,String sequnence);
@@ -19,7 +19,7 @@ public interface OrderListMapper {
 	@Delete("DELETE FROM orderlist where id=#{id}")
 	void deleteOrderListById(long id);
 	
-	@Select("SELECT * FROM orderlist where id = #{id}")
+	@Select("SELECT * FROM orderlist where id=#{id}")
 	OrderList getOrderlistByid(long id);
 	
 	//@Update("Update orderlist set order_status=#{order_status} where  id=#{id}")
@@ -39,6 +39,11 @@ public interface OrderListMapper {
 	@Update("update set order_status=#{order_status},reason=#{reason} where id=#{id}")
 	void updateTimeOutOrder(long id,String reason,int order_status);
 
-	@Select("select count(id) from orderlist")
+//	@Select("select count(id) from orderlist")
 	Integer getPageCount();
+	
+	Integer getPageCount(OrderlistVO orderlistvo);
+	
+	@Select("Select * from orderlist where order_status = #{order_status} limit #{page},#{limit}")
+	List<OrderList> getOrderListByOrderStatus(OrderlistVO orderlistvo);
 }

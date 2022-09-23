@@ -96,5 +96,11 @@ public class OrderList {
 	public void setOrder_settlement_time(Date order_settlement_time) {
 		this.order_settlement_time = order_settlement_time;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 	
 }

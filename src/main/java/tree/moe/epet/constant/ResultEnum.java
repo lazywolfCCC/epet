@@ -10,6 +10,7 @@ public enum ResultEnum {
 	NO_SUCH_USER(5005, "未找到对应用户"),
 	USER_ALREADY_EXIST(5006, "用户名已被占用"),
 	REGISTER_SUCCESS(5007, "注册成功"),
+	LACK_MONEY(5008,"余额不足"),
 	//Cart result
 	ADD_CART_ITEM_FAILED(5101, "添加到购物车失败"),
 	NOT_SUCH_CART_ITEM(5102, "未找到该购物车项目"),
@@ -20,6 +21,7 @@ public enum ResultEnum {
 	NO_SUCH_COLLECTION_ITEM(5203, "未找到对应的收藏项目"),
 	//Book result
 	NOT_SUCH_ITEM(5301, "未找到对应的物品"),
+	ITEM_STATUS_ERROR(5302,"订单状态异常,状态码为"),
 	//Comment result
 	NOT_SUCH_COMMENT_ITEM(5401, "未找到对应的评论项目"),
 	ADD_NEW_COMMENT_FAILED(5402, "添加新评论失败"),

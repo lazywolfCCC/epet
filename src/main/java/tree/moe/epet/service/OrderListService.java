@@ -32,6 +32,11 @@ public class OrderListService {
 		return orderlistMapper.getOrderlistByUserid(user_id, left, right);
 	}
 	
+	public List<OrderList> getOrderlistByOrderStatus(OrderlistVO orderlistvo)
+	{
+		return orderlistMapper.getOrderListByOrderStatus(orderlistvo);
+	}
+	
 	public List<OrderList> getAllOrderlists(int left,int right,String orderkey,String sequnence)
 	{
 		return orderlistMapper.getAllOrderlists(left, right, orderkey, sequnence);
@@ -40,6 +45,11 @@ public class OrderListService {
 	public void deleteOrderListById(long id)
 	{
 		orderlistMapper.deleteOrderListById(id);
+	}
+	
+	public List<Order_item> getEchartsData()
+	{
+		return orderItemMapper.getEchartsData();
 	}
 	
 	public OrderList getOrderlistByid(long id)
@@ -57,6 +67,11 @@ public class OrderListService {
 		if(orderlist.getId() > 0) {
 			sendDelayMessageCancelOrder(orderlist.getId());
 		}
+	}
+	
+	public int getPageCount(OrderlistVO orderlistvo)
+	{
+		return orderlistMapper.getPageCount(orderlistvo);
 	}
 	
 	public List<Order_item> getOrderItemsByOrderlistid(long orderlistid)

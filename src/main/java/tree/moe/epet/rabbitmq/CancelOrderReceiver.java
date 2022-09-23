@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import tree.moe.epet.entity.OrderList;
 import tree.moe.epet.entity.OrderlistVO;
 import tree.moe.epet.service.OrderListService;
 
@@ -23,10 +24,14 @@ public class CancelOrderReceiver {
     @RabbitHandler
     public void handle(Long orderId){
         LOGGER.info("receive delay message orderId:{}", orderId);
-        OrderlistVO orderlistVO = new OrderlistVO();
-        orderlistVO.setId(orderId);
-        orderlistVO.setOrder_status(-1);
-        orderlistVO.setOrder_settlement_time(new Date());
-        orderService.updateOrderListStatusById(orderlistVO);
+        OrderList order = orderService.getOrderlistByid(orderId);
+        if(order !=null && order.getOrder_status() == 0) {
+        	OrderlistVO orderlistVO = new OrderlistVO();
+        	orderlistVO.setId(orderId);
+        	orderlistVO.setOrder_status(-1);
+        	orderlistVO.setOrder_settlement_time(new Date());
+        	orderService.updateOrderListStatusById(orderlistVO);
+        	LOGGER.info("canceled orderId:{}", orderId);
+        }
     }
 }

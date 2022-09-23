@@ -12,6 +12,7 @@ public class User {
 	private int is_enabled;//是否启用
 	private int default_address;//默认地址编号
 	private int rank;
+	private double money;
 	private String token;
 	public String getToken() {
 		return token;
@@ -81,6 +82,18 @@ public class User {
 	}
 	public void setDefault_address(int default_address) {
 		this.default_address = default_address;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	public double getMoney() {
+		return money;
+	}
+	public void setMoney(double money) {
+		this.money = money;
 	}
 	@Override
 	public String toString() {

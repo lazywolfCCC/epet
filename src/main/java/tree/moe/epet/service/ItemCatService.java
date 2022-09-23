@@ -20,6 +20,11 @@ public class ItemCatService {
 		return catMapper.getAllCat();
 	}
 	
+	public List<Item_cat> getCatAdmin()
+	{
+		return catMapper.getCatAdmin();
+	}
+	
 	public List<Item_cat> getSonCatsById(long catid)
 	{
 		return catMapper.getItemCatById(catid);

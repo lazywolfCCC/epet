@@ -49,8 +49,13 @@ public class OrderListController {
 		{
 			throw new AuthorityException();
 		}
+		if(orderlistvo.getPage() <=0)
+		{
+			orderlistvo.setPage(1);
+		}
 		int left = count*(orderlistvo.getPage()-1);
 		int right = count;
+		orderlistvo.setUser_id(Long.valueOf(info.get("id").toString()));
 		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
 		{
 			throw new AuthorityException();
@@ -70,6 +75,52 @@ public class OrderListController {
 		result.setData(list);
 		return result;
 	}
+	
+	@RequestMapping(value="/orderlist/getOrderListsByOrderStatus")
+	@ResponseBody
+	public Result getOrderListsByOrderStatus(@RequestBody OrderlistVO orderlistvo)throws Exception
+	{
+		Result result = new Result();
+		
+		if(orderlistvo.getLimit()<=0)
+		{
+			orderlistvo.setLimit(6);
+		}
+		if(orderlistvo.getPage()<=0)
+		{
+			orderlistvo.setPage(0);
+		}
+		else
+		{
+			orderlistvo.setPage(orderlistvo.getPage()-1);
+		}
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(orderlistService.getOrderlistByOrderStatus(orderlistvo));
+		return result;
+	}
+	
+	@RequestMapping(value="/orderlist/updateOrderAdmin")
+	@ResponseBody
+	public Result updateOrderAdmin(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo)throws Exception
+	{
+		Result result = new Result();
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
+		{
+			throw new AuthorityException();
+		}
+		if(orderlistvo.getId() == 0 || orderlistvo.getOrder_status()==0)
+		{
+			throw new LackParameterException();
+		}
+		orderlistService.updateOrderListStatusById(orderlistvo);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		return result;
+	}
+	
 	@RequestMapping(value="/orderlist/getAllOrderlists")
 	@ResponseBody
 	public Result getAllOrderlists(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo)throws Exception
@@ -165,14 +216,19 @@ public class OrderListController {
 		{
 			orderlistvo.setPay_time(new Date());
 		}
-		if(orderlistvo.getOrder_status()==-4)
+		if(orderlistvo.getOrder_status()==-4 || orderlistvo.getOrder_status() == -1 
+				|| orderlistvo.getOrder_status() == 4 || orderlistvo.getOrder_status() == -3)
 		{
 			orderlistvo.setOrder_settlement_time(new Date());
 		}
-		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0)
+		if(orderlistvo.getOrder_status() == 3)
+		{
+			orderlistvo.setReceiving_time(new Date());
+		}
+		if(userService.getUserWithOutPasswordById(Long.valueOf(info.get("id").toString())).getRole() != 0 )
 		{
 			throw new AuthorityException();
-		}		
+		}
 		if(info.get("id")==null)
 		{
 			throw new TokenException();
@@ -201,6 +257,7 @@ public class OrderListController {
 		}
 		orderVO.getOrderlist().setCreate_time(new Date());
 		orderVO.getOrderlist().setProduct_count(orderVO.getOrderItemList().size());
+		orderVO.getOrderlist().setUser_id(Long.valueOf(info.get("id").toString()));
 		
 		double product_amount_total = 0;
 		double logistics_fee = 0;
@@ -211,13 +268,14 @@ public class OrderListController {
 			Item_sku temp = itemSkuService.getItemSkuById
 					(orderVO.getOrderItemList().get(k).getSku_id());
 			num = orderVO.getOrderItemList().get(k).getNumber();
-			product_price = temp.getPrice()* num;
-			product_amount_total += product_price;
+			product_price = temp.getPrice();
+			product_amount_total += temp.getPrice()* num;
 			logistics_fee+=temp.getItem().getFreight();
 			orderVO.getOrderItemList().get(k).setProduct_price(product_price);
 			orderVO.getOrderItemList().get(k).setItem_id(temp.getItem_id());
 			orderVO.getOrderItemList().get(k).setProduct_name(temp.getItem().getName());
 			orderVO.getOrderItemList().get(k).setSku_name(temp.getName());
+			orderVO.getOrderItemList().get(k).setSubtotal(product_amount_total*num);
 		}
 		for(int j = 0 ; j < orderVO.getOrderItemList().size();j++)
 		{
@@ -268,14 +326,187 @@ public class OrderListController {
 		return result;
 	}
 	
+	@RequestMapping(value="/orderlist/cancelOrder")
+	@ResponseBody
+	public Result userCancelOrder(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo) throws Exception
+	{
+		Result result = new Result();
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(orderlistvo.getId() == 0)
+		{
+			throw new LackParameterException();
+		}
+		OrderList order = orderlistService.getOrderlistByid(orderlistvo.getId());
+		if(order== null )
+		{
+			result.setCode(NOT_SUCH_ITEM.getCode());
+			result.setMsg(NOT_SUCH_ITEM.getMsg());
+			return result;
+		}
+		long user_id = Long.valueOf(info.get("id").toString());
+		
+		if(order.getUser_id() != user_id)
+		{
+			result.setCode(NO_PERMISION.getCode());
+			result.setMsg(NO_PERMISION.getMsg());
+			return result;
+		}
+		if(order.getOrder_status()>1 || order.getOrder_status()<0)
+		{
+			result.setCode(ITEM_STATUS_ERROR.getCode());
+			result.setMsg(ITEM_STATUS_ERROR.getMsg()+order.getOrder_status());
+			return result;
+		}
+		orderlistvo.setOrder_status(-1);
+		
+		orderlistvo.setOrder_settlement_time(new Date());
+		orderlistService.updateOrderListStatusById(orderlistvo);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/orderlist/confirmReceive")
+	@ResponseBody
+	public Result userConfirmReceive(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo) throws Exception
+	{
+		Result result = new Result();
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(orderlistvo.getId() == 0)
+		{
+			throw new LackParameterException();
+		}
+		OrderList order = orderlistService.getOrderlistByid(orderlistvo.getId());
+		if(order== null )
+		{
+			result.setCode(NOT_SUCH_ITEM.getCode());
+			result.setMsg(NOT_SUCH_ITEM.getMsg());
+			return result;
+		}
+		long user_id = Long.valueOf(info.get("id").toString());
+		
+		if(order.getUser_id() != user_id)
+		{
+			result.setCode(NO_PERMISION.getCode());
+			result.setMsg(NO_PERMISION.getMsg());
+			return result;
+		}
+		if(order.getOrder_status()>3 || order.getOrder_status()<1)
+		{
+			result.setCode(ITEM_STATUS_ERROR.getCode());
+			result.setMsg(ITEM_STATUS_ERROR.getMsg()+order.getOrder_status());
+			return result;
+		}
+		orderlistvo.setOrder_status(3);
+		
+		orderlistvo.setReceiving_time(new Date());
+		orderlistService.updateOrderListStatusById(orderlistvo);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/orderlist/returnOrder")
+	@ResponseBody
+	public Result userReturnOrder(HttpServletRequest request,@RequestBody OrderlistVO orderlistvo) throws Exception
+	{
+		Result result = new Result();
+		String token = request.getHeader("token");
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(orderlistvo.getId() == 0)
+		{
+			throw new LackParameterException();
+		}
+		OrderList order = orderlistService.getOrderlistByid(orderlistvo.getId());
+		if(order== null )
+		{
+			result.setCode(NOT_SUCH_ITEM.getCode());
+			result.setMsg(NOT_SUCH_ITEM.getMsg());
+			return result;
+		}
+		long user_id = Long.valueOf(info.get("id").toString());
+		
+		if(order.getUser_id() != user_id)
+		{
+			result.setCode(NO_PERMISION.getCode());
+			result.setMsg(NO_PERMISION.getMsg());
+			return result;
+		}
+		if(order.getOrder_status()>3 || order.getOrder_status()<0)
+		{
+			result.setCode(ITEM_STATUS_ERROR.getCode());
+			result.setMsg(ITEM_STATUS_ERROR.getMsg()+order.getOrder_status());
+			return result;
+		}
+		orderlistvo.setOrder_status(-2);
+		orderlistvo.setOrder_settlement_time(new Date());
+		orderlistService.updateOrderListStatusById(orderlistvo);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		
+		return result;
+	}
+	
 	@RequestMapping(value="/orderlist/getPageCount")
 	@ResponseBody
-	public Result getPageCount()
+	public Result getPageCount(@RequestBody OrderlistVO orderlistvo)
 	{
 		Result<Integer> result = new Result();
 		result.setCode(REQUEST_SUCCESS.getCode());
 		result.setMsg(REQUEST_SUCCESS.getMsg());
-		result.setData(orderlistService.getPageCount());
+		result.setData(orderlistService.getPageCount(orderlistvo));
+		return result;
+	}
+	
+	@RequestMapping(value="/orderlist/payOrder")
+	@ResponseBody
+	public Result payOrder(HttpServletRequest request,@RequestBody OrderList orderlist)throws Exception
+	{
+		String token = request.getHeader("token");
+		Result result = new Result();
+		OrderList order_list = new OrderList();
+		Map<String, Object> info = JwtUtil.getInfo(token);
+		if(orderlistService.getOrderlistByid(orderlist.getId()) == null)
+		{
+			
+			result.setCode(NOT_SUCH_ITEM.getCode());
+			result.setMsg(NOT_SUCH_ITEM.getMsg());
+			return result;
+		}
+		order_list = orderlistService.getOrderlistByid(orderlist.getId());
+		if(order_list.getOrder_status() != 0)
+		{
+			result.setCode(ITEM_STATUS_ERROR.getCode());
+			result.setMsg(ITEM_STATUS_ERROR.getMsg()+orderlist.getOrder_status());
+			return result;
+		}
+		long user_id = Long.valueOf(info.get("id").toString());
+		User user = userService.getUserWithOutPasswordById(user_id);
+		System.out.println(user.getMoney());
+		System.out.println((order_list.getOrder_amount_total() + order_list.getLogistics_fee()));
+		if(user.getMoney() > (order_list.getOrder_amount_total() + order_list.getLogistics_fee()))
+		{
+			order_list.setOrder_status(1);
+			OrderlistVO ordervo = new OrderlistVO();
+			ordervo.setOrder_status(1);
+			ordervo.setUser_id(user_id);
+			user.setMoney(user.getMoney()-order_list.getOrder_amount_total() - order_list.getLogistics_fee());
+			ordervo.setId(orderlist.getId());
+			ordervo.setPay_time(new Date());
+			orderlistService.updateOrderListStatusById(ordervo);
+			userService.updateUserByAdmin(user);
+			result.setCode(REQUEST_SUCCESS.getCode());
+			result.setMsg(REQUEST_SUCCESS.getMsg());
+		}
+		else
+		{
+			result.setCode(LACK_MONEY.getCode());
+			result.setMsg(LACK_MONEY.getMsg());
+		}
 		return result;
 	}
 	

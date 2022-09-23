@@ -13,6 +13,9 @@ public interface ItemCatMapper {
 	@Select("SELECT * FROM item_cat")
 	List<Item_cat> getAllCat();
 	
+	@Select("select id,name from item_cat")
+	List<Item_cat> getCatAdmin();
+	
 	@Select("SELECT * FROM item_cat where parent_id =#{id}")
 	List<Item_cat> getItemCatById(long id);
 	

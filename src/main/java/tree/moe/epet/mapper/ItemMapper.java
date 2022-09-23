@@ -18,6 +18,9 @@ public interface ItemMapper {
 	
 	List<Item> getAllItems();
 	
+	@Select("Select cat_id from item")
+	List<Item> getItemOnlyCat();
+	
 	@Select("SELECT * FROM item WHERE cat_id=#{id}")
 	List<Item> getItemsByCategory(Item_cat cat);
 	
@@ -31,6 +34,8 @@ public interface ItemMapper {
 	
 	Item getItem(long id);
 	
+	List<ItemAdmin> getItemAdminByShopId(long shopId,int left,int right);
+	
 	@Select("Select * from item limit #{left},#{right}")
 	List<Item> getItemByPage(int page,int left , int right);
 	
@@ -42,6 +47,8 @@ public interface ItemMapper {
 	
 	@Select("Select count(id) from item")
 	Integer getPageCount();
+	
+	Integer getPageCountByCol(ItemAdminVo itemAdminvo);
 	
 	@Select("Select count(id) from item where name like #{keywords} ")
 	Integer getPageCountByKeywords(String keywords);

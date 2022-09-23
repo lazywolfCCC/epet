@@ -45,6 +45,7 @@ public class ItemController {
 		return itemService.getAllItems();
 	}
 	
+	
 	@RequestMapping(value="/item/getitemsBycat")
 	@ResponseBody
 	public List<Item> getItemsBycat(@RequestBody Item_cat cate)throws Exception
@@ -71,18 +72,20 @@ public class ItemController {
 	@ResponseBody
 	public List<Item> getItemsByShopId(@RequestBody ShopVO shopvo) throws Exception
 	{
-		int count = 20;
+		int count = 6;
+		List<Item> list = new ArrayList();
 		if(shopvo.getId()==0)
 		{
 			throw new LackParameterException();
 		}
 		if(shopvo.getPage() <= 0)
 		{
-			shopvo.setPage(0);
+			shopvo.setPage(1);
 		}
 		int left = count * (shopvo.getPage()-1);
 		int right = count;
-		return itemService.getItemsByShopId(shopvo.getId(),left,right);
+		list = itemService.getItemsByShopId(shopvo.getId(),left,right);
+		return list;
 	}
 	
 	@RequestMapping(value="/item/getItemsByPage")
@@ -270,6 +273,47 @@ public class ItemController {
 		result.setData(itemService.getPageCount());
 		return result;
 	}
+	
+	@RequestMapping(value="/item/getItemByShopIdEx")
+	@ResponseBody
+	public Result getItemByShopIdEx(@RequestBody ItemAdminVo itemAdminvo)throws Exception
+	{
+		Result result = new Result();
+		int limit = 6;
+		int left = 0 , right =0;
+		if(itemAdminvo.getShopId() <= 0)
+		{
+			throw new LackParameterException();
+		}
+		if(itemAdminvo.getPage() <=0 || itemAdminvo.getPage()==null)
+		{
+			itemAdminvo.setPage(1);
+		}
+		if(itemAdminvo.getLimit() <= 0 || itemAdminvo.getLimit()==null)
+		{
+			itemAdminvo.setLimit(limit);
+		}
+		left = itemAdminvo.getPage();
+		right = itemAdminvo.getLimit();
+		List<ItemAdmin> list = new ArrayList();
+		list = itemService.getItemAdminByShopId(itemAdminvo.getShopId(),left,right);
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(list);
+		return result;
+	}
+	
+	@RequestMapping(value="/item/getPageCountByCol")
+	@ResponseBody
+	public Result getPageCountByCol(@RequestBody ItemAdminVo itemAdminvo)
+	{
+		Result result = new Result();
+		result.setCode(REQUEST_SUCCESS.getCode());
+		result.setMsg(REQUEST_SUCCESS.getMsg());
+		result.setData(itemService.getPageCountByCol(itemAdminvo));
+		return result;
+	}
+	
 	/*
 	 * Natuki Added Below
 	 * Natuki Added Below
@@ -381,12 +425,9 @@ public class ItemController {
 		if(itemAdmin.getName() == null) {
 			throw new LackParameterException();
 		}
-		
 		itemAdmin.setPrice(0.0);
 		itemAdmin.setSales(0);
-		
 		boolean createRes = itemService.createItem(itemAdmin);
-		
 		Result<ItemAdmin> result = new Result<ItemAdmin>();
 		if(createRes) {
 			result.setCode(REQUEST_SUCCESS.getCode());
@@ -396,7 +437,6 @@ public class ItemController {
 			result.setCode(CREATE_FAILED.getCode());
 			result.setMsg(CREATE_FAILED.getMsg());
 		}
-		
 		return result;
 	}
 }

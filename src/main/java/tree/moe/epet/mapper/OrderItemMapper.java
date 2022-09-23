@@ -20,5 +20,8 @@ public interface OrderItemMapper {
 	@Options(useGeneratedKeys=true , keyProperty="id" , keyColumn="id")
 	int createNewOrderItem(Order_item order_item);
 	
+	@Select("Select product_name,subtotal from order_item")
+	List<Order_item> getEchartsData();
+	
 	
 }
